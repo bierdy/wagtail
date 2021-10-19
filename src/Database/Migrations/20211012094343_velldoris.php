@@ -3,6 +3,7 @@
 namespace Velldoris\Database\Migrations;
 
 use Velldoris\Database\VelldorisMigration;
+use CodeIgniter\CLI\CLI;
 
 class Velldoris20211012094343 extends VelldorisMigration
 {
@@ -213,7 +214,7 @@ class Velldoris20211012094343 extends VelldorisMigration
         foreach($this->tables as $table_name => $fields)
             if ($this->db->tableExists($table_name))
             {
-                print_r("Velldoris package installation error: table '{$table_name}' already exist. Delete this table and try install again.");
+                CLI::write(CLI::color("Velldoris package installation error: table '{$table_name}' already exist. Delete this table and try install again.", 'red') . PHP_EOL);
                 exit;
             }
         

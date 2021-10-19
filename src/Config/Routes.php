@@ -58,6 +58,4 @@ $routes->group($velldoris_app_config->backRootPath, ['namespace' => 'Velldoris\C
     
     $routes->get('assets/css/(:segment)', 'Assets::css/$1');
     $routes->get('assets/js/(:segment)', 'Assets::js/$1');
-    
-    $routes->get('install', 'Install::install');
 });
