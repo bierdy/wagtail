@@ -10,6 +10,10 @@ class Velldoris extends BaseService
     
     public function setResourceRoute()
     {
+        // We don't need to define a front controller in CLI request
+        if (is_cli())
+            return;
+        
         helper('velldoris');
         $routes = service('Routes');
         $resourceModel = model('Resource');
@@ -26,14 +30,14 @@ class Velldoris extends BaseService
             ->where("{$resourceModel->table}.url", $uri_segments[array_key_last($uri_segments)])
             ->first();
         
-        // Here is 404
+        // The current resource not found
         if (is_null($resource))
             return;
     
         $resource = $resourceModel->getResourceBranch($resource->id);
         $resource_segments = $resourceModel->getResourceBranchSegments($resource);
     
-        // Here is 404
+        // The current uri does not match any resource route
         if ($uri_segments !== array_reverse($resource_segments))
             return;
         
