@@ -147,4 +147,53 @@ class Resource extends Velldoris
         
         return $childs[0] ?? [];
     }
+    
+    public function getResourceBranch(int $id = 0) : ? object
+    {
+        if (empty($id))
+            return null;
+        
+        $templateModel = model('Template');
+        $variableModel = model('Variable');
+        $variableValueModel = model('VariableValue');
+        
+        $resource = $this
+            ->select("{$this->table}.*, t.title AS template_title, t.class_method AS template_class_method")
+            ->join("{$templateModel->table} AS t", "t.id = {$this->table}.template_id", 'left')
+            ->find($id);
+        
+        if (is_null($resource))
+            return null;
+    
+        $resource->variables = $variableModel
+            ->select('variables.*, template_variables.order')
+            ->where('template_variables.template_id', $resource->template_id)
+            ->join('template_variables', 'template_variables.variable_id = variables.id', 'left')
+            ->orderBy('template_variables.order', 'ASC')
+            ->findAll();
+    
+        foreach($resource->variables as &$resource_variable)
+        {
+            $resource_variable->values = $variableValueModel
+                ->select('variable_values.*')
+                ->where('variable_values.resource_id', $resource->id)
+                ->where('variable_values.variable_id', $resource_variable->id)
+                ->orderBy('variable_values.order', 'ASC')
+                ->findAll();
+        }
+        
+        $resource->parent = ! empty($resource->parent_id) ? $this->getResourceBranch($resource->parent_id) : null;
+        
+        return $resource;
+    }
+    
+    public function getResourceBranchSegments(object $resource_branch, array $resource_branch_segments = []) : array
+    {
+        $resource_branch_segments[] = $resource_branch->url;
+        
+        if (! empty($resource_branch->parent))
+            $resource_branch_segments = $this->getResourceBranchSegments($resource_branch->parent, $resource_branch_segments);
+        
+        return $resource_branch_segments;
+    }
 }

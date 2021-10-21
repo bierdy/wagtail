@@ -11,4 +11,6 @@ class VelldorisApp extends BaseConfig
     public $backRootPath = '/';
     
     public $backSubDomain = 'admin';
+    
+    public $frontHomeUrlSegment = '/';
 }

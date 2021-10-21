@@ -3,6 +3,7 @@
 namespace Velldoris\Config;
 
 use CodeIgniter\Events\Events;
+use Config\Services;
 
 /*
  * --------------------------------------------------------------------
@@ -30,3 +31,5 @@ Events::on('pre_system', static function ()
     if (! in_array($validation_class_rules_class, $config_validation_rule_sets))
         config('Validation')->ruleSets[] = $validation_class_rules_class;
 });
+
+Events::on('pre_system', [service('Velldoris'), 'setResourceRoute']);
