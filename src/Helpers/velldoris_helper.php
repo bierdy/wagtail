@@ -116,7 +116,7 @@ if (! function_exists('setVelldorisCookie'))
             return;
         
         $response = service('Response');
-        $velldoris_cookie_config = config('Velldoris\\Config\\VelldorisCookie');
+        $velldoris_cookie_config = config('VelldorisCookie');
         $options = array_merge((array) $velldoris_cookie_config, $options);
         
         $cookie = [
@@ -143,7 +143,7 @@ if (! function_exists('getVelldorisCookie'))
             return '';
         
         $request = service('Request');
-        $velldoris_cookie_config = config('Velldoris\\Config\\VelldorisCookie');
+        $velldoris_cookie_config = config('VelldorisCookie');
         
         $cookie = $request->getCookie($velldoris_cookie_config->prefix . $name);
         
@@ -159,7 +159,7 @@ if (! function_exists('deleteVelldorisCookie'))
     function deleteVelldorisCookie(string $name = '')
     {
         $response = service('Response');
-        $velldoris_cookie_config = config('Velldoris\\Config\\VelldorisCookie');
+        $velldoris_cookie_config = config('VelldorisCookie');
         
         $response->deleteCookie($name, $velldoris_cookie_config->domain, $velldoris_cookie_config->path, $velldoris_cookie_config->prefix);
     }

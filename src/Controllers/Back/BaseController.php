@@ -61,7 +61,7 @@ class BaseController extends Controller
         
         // E.g.: $this->session = \Config\Services::session();
         
-        $this->velldoris_cookie_config = config('Velldoris\\Config\\VelldorisCookie');
+        $this->velldoris_cookie_config = config('VelldorisCookie');
         $this->velldorisModel = model('Velldoris');
         $this->resourceModel = model('Resource');
         $this->templateModel = model('Template');

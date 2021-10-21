@@ -14,7 +14,7 @@ class VelldorisMigrate extends BaseCommand
     public function run(array $params)
     {
         try {
-            $velldoris_app_config = config('Velldoris\\Config\\VelldorisApp');
+            $velldoris_app_config = config('VelldorisApp');
             $db = \Config\Database::connect($velldoris_app_config->DBGroup);
             $db->getVersion();
         } catch (\Throwable $e) {

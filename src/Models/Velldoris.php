@@ -10,7 +10,7 @@ class Velldoris extends Model
 {
     public function __construct(? ConnectionInterface &$db = null, ? ValidationInterface $validation = null)
     {
-        $velldoris_app_config = config('Velldoris\\Config\\VelldorisApp');
+        $velldoris_app_config = config('VelldorisApp');
         
         $this->DBGroup = $velldoris_app_config->DBGroup;
         
