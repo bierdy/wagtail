@@ -59,6 +59,9 @@ class Velldoris20211012094343 extends VelldorisMigration
             'icon' => [
                 'type' => 'TEXT',
             ],
+            'class_method' => [
+                'type' => 'TEXT',
+            ],
             'active' => [
                 'type' => 'TINYINT',
                 'constraint' => 1,

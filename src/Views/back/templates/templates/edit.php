@@ -35,6 +35,10 @@
             <?php endif; ?>
             <?= form_input('icon', $post['icon'] ?? $template->icon ?? '', ['class' => 'form-control' , 'id' => 'icon']); ?>
         </div>
+        <div class="mb-3">
+            <?= form_label('Class::method', 'class_method', ['class' => 'form-label']); ?>
+            <?= form_input('class_method', $post['class_method'] ?? $template->class_method ?? '', ['class' => 'form-control' , 'id' => 'class_method']); ?>
+        </div>
         <div class="form-check mb-3">
             <?= form_hidden('unique', false); ?>
             <?= form_checkbox('unique', true, $post['unique'] ?? $template->unique ?? false, ['class' => 'form-check-input mb-1' , 'id' => 'unique']); ?>

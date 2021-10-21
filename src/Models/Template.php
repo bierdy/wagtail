@@ -12,7 +12,7 @@ class Template extends Velldoris
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
     
-    protected $allowedFields = ['title', 'icon', 'active', 'unique'];
+    protected $allowedFields = ['title', 'icon', 'class_method', 'active', 'unique'];
     
     protected $useTimestamps = true;
     protected $createdField = 'created_at';

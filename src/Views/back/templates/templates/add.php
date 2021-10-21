@@ -26,6 +26,10 @@
             <?= form_label('Icon', 'icon', ['class' => 'form-label']); ?>
             <?= form_input('icon', $post['icon'] ?? '', ['class' => 'form-control' , 'id' => 'icon']); ?>
         </div>
+        <div class="mb-3">
+            <?= form_label('Class::method', 'class_method', ['class' => 'form-label']); ?>
+            <?= form_input('class_method', $post['class_method'] ?? '', ['class' => 'form-control' , 'id' => 'class_method']); ?>
+        </div>
         <div class="form-check mb-3">
             <?= form_checkbox('unique', true, $post['unique'] ?? false, ['class' => 'form-check-input mb-1' , 'id' => 'unique']); ?>
             <?= form_label('Unique', 'unique', ['class' => 'form-label']); ?>

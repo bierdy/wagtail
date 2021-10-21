@@ -15,6 +15,7 @@
                         <th>#</th>
                         <th>Icon</th>
                         <th>Title</th>
+                        <th>Class::method</th>
                         <th>Unique</th>
                         <th>Resources count</th>
                         <th>Created at</th>
@@ -34,6 +35,7 @@
                             <td>
                                 <a class="link-secondary text-decoration-none" href="<?= route_to('Velldoris\Controllers\Back\Templates::edit', $template->id); ?>"><?= $template->title; ?></a>
                             </td>
+                            <td><?= $template->class_method; ?></td>
                             <td>
                                 <?php if ($template->unique) : ?>
                                     <i class="bi bi-check"></i>
