@@ -8,9 +8,11 @@ class VelldorisApp extends BaseConfig
 {
     public $DBGroup = 'velldoris';
     
-    public $backRootPath = '/';
+    public $backRootPath = 'admin';
     
-    public $backSubDomain = 'admin';
+    public $frontRootPath = '/';
     
-    public $frontHomeUrlSegment = '/';
+    public $backDomain = '';
+    
+    public $frontDomain = '';
 }
