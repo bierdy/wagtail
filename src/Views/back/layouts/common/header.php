@@ -7,16 +7,16 @@
             <div class="collapse navbar-collapse" id="header-menu">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link<?= uri_string() == '/' ? ' active' : ''; ?> ps-0" href="/">Home</a>
+                        <a class="nav-link<?= url_is(route_to('Velldoris\Controllers\Back\Home::index')) ? ' active text-decoration-underline' : ''; ?> ps-0" href="<?= route_to('Velldoris\Controllers\Back\Home::index'); ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is('templates*') ? ' active' : ''; ?>" href="<?= route_to('Velldoris\Controllers\Back\Templates::list'); ?>">Templates</a>
+                        <a class="nav-link<?= url_is(route_to('Velldoris\Controllers\Back\Templates::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= route_to('Velldoris\Controllers\Back\Templates::list'); ?>">Templates</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is('variables') || url_is('variables/*') ? ' active' : ''; ?>" href="<?= route_to('Velldoris\Controllers\Back\Variables::list'); ?>">Variables</a>
+                        <a class="nav-link<?= url_is(route_to('Velldoris\Controllers\Back\Variables::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= route_to('Velldoris\Controllers\Back\Variables::list'); ?>">Variables</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is('languages*') ? ' active' : ''; ?>" href="<?= route_to('Velldoris\Controllers\Back\Languages::list'); ?>">Languages</a>
+                        <a class="nav-link<?= url_is(route_to('Velldoris\Controllers\Back\Languages::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= route_to('Velldoris\Controllers\Back\Languages::list'); ?>">Languages</a>
                     </li>
                     
                     <!--
