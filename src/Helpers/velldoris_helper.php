@@ -26,7 +26,7 @@ if (! function_exists('buildResourcesTree'))
             else
                 $open_branches = [];
     
-            $uri_string = trim(uri_string(), '/');
+            $uri_string = trim(uri_string(true), '/');
                 
             foreach($branches as $branch)
             {

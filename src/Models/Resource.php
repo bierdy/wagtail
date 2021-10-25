@@ -24,7 +24,6 @@ class Resource extends Velldoris
         'title' => 'required|is_unique[resources.title,id,{id}]',
         'parent_id' => 'required|numeric',
         'template_id' => 'required|numeric',
-        'url' => 'is_unique[resources.url,id,{id}]',
         'order' => 'numeric',
     ];
     protected $validationMessages = [];
@@ -148,41 +147,74 @@ class Resource extends Velldoris
         return $childs[0] ?? [];
     }
     
-    public function getResourceBranch(int $id = 0) : ? object
+    public function getResourceTreeByUriSegments(array $uri_segments = []) : ? object
     {
-        if (empty($id))
+        if (empty($uri_segments))
             return null;
         
         $templateModel = model('Template');
         $variableModel = model('Variable');
         $variableValueModel = model('VariableValue');
+        $uri_segments_resources = [];
+        $parent_id = null;
+        $resource = null;
         
-        $resource = $this
-            ->select("{$this->table}.*, t.title AS template_title, t.class_method AS template_class_method")
-            ->join("{$templateModel->table} AS t", "t.id = {$this->table}.template_id", 'left')
-            ->find($id);
-        
-        if (is_null($resource))
-            return null;
-    
-        $resource->variables = $variableModel
-            ->select('variables.*, template_variables.order')
-            ->where('template_variables.template_id', $resource->template_id)
-            ->join('template_variables', 'template_variables.variable_id = variables.id', 'left')
-            ->orderBy('template_variables.order', 'ASC')
-            ->findAll();
-    
-        foreach($resource->variables as &$resource_variable)
+        foreach($uri_segments as $uri_segment)
         {
-            $resource_variable->values = $variableValueModel
-                ->select('variable_values.*')
-                ->where('variable_values.resource_id', $resource->id)
-                ->where('variable_values.variable_id', $resource_variable->id)
-                ->orderBy('variable_values.order', 'ASC')
+            $uri_segment_resource = $this
+                ->select("{$this->table}.*, t.title AS template_title, t.class_method AS template_class_method")
+                ->where("{$this->table}.url", $uri_segment)
+                ->where("{$this->table}.parent_id", $parent_id ?? 0)
+                ->join("{$templateModel->table} AS t", "t.id = {$this->table}.template_id", 'left')
                 ->findAll();
+            
+            if (count($uri_segment_resource) !== 1)
+                return null;
+    
+            $uri_segment_resource = $uri_segment_resource[0];
+            
+            $uri_segment_resource->variables = $variableModel
+                ->select('variables.*, template_variables.order')
+                ->where('template_variables.template_id', $uri_segment_resource->template_id)
+                ->join('template_variables', 'template_variables.variable_id = variables.id', 'left')
+                ->orderBy('template_variables.order', 'ASC')
+                ->findAll();
+    
+            foreach($uri_segment_resource->variables as &$resource_variable)
+            {
+                $resource_variable->values = $variableValueModel
+                    ->select('variable_values.*')
+                    ->where('variable_values.resource_id', $uri_segment_resource->id)
+                    ->where('variable_values.variable_id', $resource_variable->id)
+                    ->orderBy('variable_values.order', 'ASC')
+                    ->findAll();
+            }
+    
+            $uri_segments_resources[] = $uri_segment_resource;
+            $parent_id = $uri_segment_resource->id;
+        }
+    
+        $uri_segment_resource_ = null;
+        foreach($uri_segments_resources as $key => $uri_segment_resource)
+        {
+            if ($key === array_key_first($uri_segments_resources))
+            {
+                $uri_segment_resource_ = $uri_segment_resource;
+                $uri_segment_resource_->parent = null;
+                continue;
+            }
+    
+            $resource = $uri_segment_resource;
+            $resource->parent = $uri_segment_resource_;
+            $uri_segment_resource_ = $uri_segment_resource;
         }
         
-        $resource->parent = ! empty($resource->parent_id) ? $this->getResourceBranch($resource->parent_id) : null;
+        unset($uri_segments);
+        unset($uri_segment);
+        unset($uri_segments_resources);
+        unset($uri_segment_resource);
+        unset($uri_segment_resource_);
+        unset($parent_id);
         
         return $resource;
     }
@@ -195,5 +227,20 @@ class Resource extends Velldoris
             $resource_branch_segments = $this->getResourceBranchSegments($resource_branch->parent, $resource_branch_segments);
         
         return $resource_branch_segments;
+    }
+    
+    public function updateUrl(int $id = 0)
+    {
+        $resource = $this->find($id);
+        $resource_neighbors = $this->where('parent_id', $resource->parent_id)->where('id !=', $id)->findAll();
+        $resource_neighbors_urls = array_column($resource_neighbors, 'url');
+        $velldoris_app_config = config('VelldorisApp');
+    
+        $resource_url = ! empty($resource->url) ? $resource->url : mb_url_title($resource->title, $velldoris_app_config->resourceUrlSeparator, true);
+        
+        while(in_array($resource_url, $resource_neighbors_urls))
+            $resource_url .= $velldoris_app_config->resourceUrlSeparator . $velldoris_app_config->resourceUrlCopyPostfix;
+        
+        $this->update($id, ['url' => $resource_url]);
     }
 }

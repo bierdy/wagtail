@@ -15,4 +15,8 @@ class VelldorisApp extends BaseConfig
     public $backDomain = '';
     
     public $frontDomain = '';
+    
+    public $resourceUrlSeparator = '-';
+    
+    public $resourceUrlCopyPostfix = 'copy';
 }

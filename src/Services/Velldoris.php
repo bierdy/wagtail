@@ -19,7 +19,7 @@ class Velldoris extends BaseService
         $resourceModel = model('Resource');
         $velldoris_app_config = config('VelldorisApp');
         
-        $uri_string = uri_string();
+        $uri_string = uri_string(true);
         $uri_string = ! empty($uri_string) ? $uri_string : '/';
         $uri_segments = explode('/', $uri_string);
         $uri_segments = array_diff($uri_segments, ['']);
@@ -30,20 +30,10 @@ class Velldoris extends BaseService
         if (empty($uri_segments))
             return;
     
-        $resource = $resourceModel
-            ->select("{$resourceModel->table}.id")
-            ->where("{$resourceModel->table}.url", $uri_segments[array_key_last($uri_segments)])
-            ->first();
+        $resource = $resourceModel->getResourceTreeByUriSegments($uri_segments);
         
         // The current resource not found
         if (is_null($resource))
-            return;
-    
-        $resource = $resourceModel->getResourceBranch($resource->id);
-        $resource_segments = $resourceModel->getResourceBranchSegments($resource);
-    
-        // The current uri does not match any resource route
-        if ($uri_segments !== array_reverse($resource_segments))
             return;
         
         $this->setResource($resource);

@@ -10,9 +10,6 @@ class Resources extends BaseController
         
         if (! empty($post))
         {
-            if (! empty($post['title']) && empty($post['url']))
-                $post['url'] = mb_url_title($post['title'], '-', true);
-    
             $post['order'] = count($this->resourceModel->where(['parent_id' => $parent_id])->findAll());
             
             if ($this->resourceModel->validate($post) === false)
@@ -23,6 +20,7 @@ class Resources extends BaseController
             else
             {
                 $id = $this->resourceModel->insert($post);
+                $this->resourceModel->updateUrl($id);
     
                 setVelldorisCookie('message', 'The resource was successfully created.');
                 return $this->response->redirect(route_to('Velldoris\Controllers\Back\Resources::edit', $id));
@@ -54,9 +52,6 @@ class Resources extends BaseController
     
         if (! empty($post))
         {
-            if (! empty($post['title']) && empty($post['url']))
-                $post['url'] = mb_url_title($post['title'], '-', true);
-    
             if (! empty($variables))
                 foreach($variables as $variable)
                     if (! empty($variable->validation_rules))
@@ -70,6 +65,7 @@ class Resources extends BaseController
             else
             {
                 $this->resourceModel->update($id, $post);
+                $this->resourceModel->updateUrl($id);
     
                 if (! empty($variables))
                     foreach($variables as $variable)
@@ -190,6 +186,7 @@ class Resources extends BaseController
     public function setParent(int $id = 0, int $parent_id = 0)
     {
         $result = $this->resourceModel->update($id, ['parent_id' => $parent_id]);
+        $this->resourceModel->updateUrl($id);
     
         return json_encode(['result' => $result]);
     }
