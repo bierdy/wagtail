@@ -30,6 +30,6 @@ Events::on('pre_system', static function ()
     
     if (! in_array($validation_class_rules_class, $config_validation_rule_sets))
         config('Validation')->ruleSets[] = $validation_class_rules_class;
-});
+}, 0);
 
-Events::on('pre_system', [service('Wagtail'), 'setResourceRoute']);
+Events::on('pre_system', [service('Wagtail'), 'setResourceRoute'], 1);
