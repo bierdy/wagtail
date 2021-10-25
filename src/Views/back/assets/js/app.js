@@ -401,8 +401,8 @@ class App
     }
     
     initConfig() {
-        if (window.velldoris_cookie_config)
-            app.config.cookie = window.velldoris_cookie_config;
+        if (window.wagtail_cookie_config)
+            app.config.cookie = window.wagtail_cookie_config;
     }
 }
 

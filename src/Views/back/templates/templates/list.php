@@ -1,12 +1,12 @@
-<?= $this->extend('Velldoris\Views\back\templates\default'); ?>
+<?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
     <?php if (! empty($templates)) : ?>
         <p class="text-end">Templates count: <?= count($templates); ?></p>
         <?php if (! empty($resources_count)) : ?>
-            <p class="text-end"><?= anchor(route_to('Velldoris\Controllers\Back\Templates::deleteAll'), 'Delete all templates', ['class' => 'btn btn-danger modal-alert-link', 'data-alert-link-text' => "There are {$resources_count} resources assigned to all templates. To delete all templates first delete all resources."]); ?></p>
+            <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Templates::deleteAll'), 'Delete all templates', ['class' => 'btn btn-danger modal-alert-link', 'data-alert-link-text' => "There are {$resources_count} resources assigned to all templates. To delete all templates first delete all resources."]); ?></p>
         <?php else : ?>
-            <p class="text-end"><?= anchor(route_to('Velldoris\Controllers\Back\Templates::deleteAll'), 'Delete all templates', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all templates?']); ?></p>
+            <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Templates::deleteAll'), 'Delete all templates', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all templates?']); ?></p>
         <?php endif; ?>
         <div class="table-responsive">
             <table class="table link-secondary">
@@ -33,7 +33,7 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a class="link-secondary text-decoration-none" href="<?= route_to('Velldoris\Controllers\Back\Templates::edit', $template->id); ?>"><?= $template->title; ?></a>
+                                <a class="link-secondary text-decoration-none" href="<?= route_to('Wagtail\Controllers\Back\Templates::edit', $template->id); ?>"><?= $template->title; ?></a>
                             </td>
                             <td><?= $template->class_method; ?></td>
                             <td>
@@ -47,14 +47,14 @@
                             <td>
                                 <div class="text-end">
                                     <?php if (empty($template->active)) : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Templates::activate', $template->id); ?>"><i class="bi bi-toggle-off"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::activate', $template->id); ?>"><i class="bi bi-toggle-off"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Templates::deactivate', $template->id); ?>"><i class="bi bi-toggle-on"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::deactivate', $template->id); ?>"><i class="bi bi-toggle-on"></i></a>
                                     <?php endif; ?>
                                     <?php if (! empty($template->resources_count)) : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Templates::delete', $template->id); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $template->resources_count; ?> resources with the template &quot;<?= $template->title; ?>&quot;. To delete a template uninstall this template from all resources assigned it."><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::delete', $template->id); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $template->resources_count; ?> resources with the template &quot;<?= $template->title; ?>&quot;. To delete a template uninstall this template from all resources assigned it."><i class="bi bi-trash link-danger"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Templates::delete', $template->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete template &quot;<?= $template->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::delete', $template->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete template &quot;<?= $template->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </td>
@@ -67,6 +67,6 @@
         <p>There are no templates.</p>
     <?php endif ?>
     <div class="overflow-hidden">
-        <?= anchor(route_to('Velldoris\Controllers\Back\Templates::add'), 'Add template', ['class' => 'btn btn-primary float-end']); ?>
+        <?= anchor(route_to('Wagtail\Controllers\Back\Templates::add'), 'Add template', ['class' => 'btn btn-primary float-end']); ?>
     </div>
 <?= $this->endSection(); ?>

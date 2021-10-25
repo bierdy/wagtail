@@ -1,12 +1,12 @@
-<?= $this->extend('Velldoris\Views\back\templates\default'); ?>
+<?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
     <?php if (! empty($languages)) : ?>
         <p class="text-end">Languages count: <?= count($languages); ?></p>
         <?php if (! empty($variables_count)) : ?>
-            <p class="text-end"><?= anchor(route_to('Velldoris\Controllers\Back\Languages::deleteAll'), 'Delete all languages', ['class' => 'btn btn-danger modal-alert-link', 'data-alert-link-text' => "There are {$variables_count} variables that has the language assigned. To delete all languages first unassigned all languages from all variables."]); ?></p>
+            <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Languages::deleteAll'), 'Delete all languages', ['class' => 'btn btn-danger modal-alert-link', 'data-alert-link-text' => "There are {$variables_count} variables that has the language assigned. To delete all languages first unassigned all languages from all variables."]); ?></p>
         <?php else : ?>
-            <p class="text-end"><?= anchor(route_to('Velldoris\Controllers\Back\Languages::deleteAll'), 'Delete all languages', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all languages?']); ?></p>
+            <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Languages::deleteAll'), 'Delete all languages', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all languages?']); ?></p>
         <?php endif; ?>
         <div class="table-responsive">
             <table class="table link-secondary">
@@ -37,7 +37,7 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a class="link-secondary text-decoration-none" href="<?= route_to('Velldoris\Controllers\Back\Languages::edit', $language->id); ?>"><?= $language->title; ?></a>
+                                <a class="link-secondary text-decoration-none" href="<?= route_to('Wagtail\Controllers\Back\Languages::edit', $language->id); ?>"><?= $language->title; ?></a>
                             </td>
                             <td><?= $language->code; ?></td>
                             <td>
@@ -51,17 +51,17 @@
                             <td>
                                 <div class="text-end">
                                     <?php if (empty($language->default)) : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Languages::setDefault', $language->id); ?>">Set default</a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::setDefault', $language->id); ?>">Set default</a>
                                     <?php endif ?>
                                     <?php if (empty($language->active)) : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Languages::activate', $language->id); ?>"><i class="bi bi-toggle-off"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::activate', $language->id); ?>"><i class="bi bi-toggle-off"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Languages::deactivate', $language->id); ?>"><i class="bi bi-toggle-on"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::deactivate', $language->id); ?>"><i class="bi bi-toggle-on"></i></a>
                                     <?php endif ?>
                                     <?php if (! empty($language->variables_count)) : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Languages::delete', $language->id); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $language->variables_count; ?> variables with the language &quot;<?= $language->title; ?>&quot;. To delete a language uninstall this language from all variables assigned it."><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::delete', $language->id); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $language->variables_count; ?> variables with the language &quot;<?= $language->title; ?>&quot;. To delete a language uninstall this language from all variables assigned it."><i class="bi bi-trash link-danger"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Languages::delete', $language->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete language &quot;<?= $language->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::delete', $language->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete language &quot;<?= $language->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </td>
@@ -74,6 +74,6 @@
         <p>There are no languages.</p>
     <?php endif ?>
     <div class="overflow-hidden">
-        <?= anchor(route_to('Velldoris\Controllers\Back\Languages::add'), 'Add language', ['class' => 'btn btn-primary float-end']); ?>
+        <?= anchor(route_to('Wagtail\Controllers\Back\Languages::add'), 'Add language', ['class' => 'btn btn-primary float-end']); ?>
     </div>
 <?= $this->endSection(); ?>

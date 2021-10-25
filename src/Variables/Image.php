@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Variables;
+namespace Wagtail\Variables;
 
 class Image extends Variable implements VariableInterface
 {
@@ -102,6 +102,6 @@ class Image extends Variable implements VariableInterface
     
         $this->variableValueModel->delete($value_id);
     
-        setVelldorisCookie('message', 'The image was successfully deleted.');
+        setWagtailCookie('message', 'The image was successfully deleted.');
     }
 }

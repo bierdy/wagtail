@@ -1,12 +1,12 @@
 <?php
 
-namespace Velldoris\Controllers\Back;
+namespace Wagtail\Controllers\Back;
 
 class Templates extends BaseController
 {
     public function list()
     {
-        $templates = $this->velldorisModel->db
+        $templates = $this->wagtailModel->db
             ->table("{$this->templateModel->table} AS t")
             ->select("t.*, COUNT(DISTINCT r.id) AS resources_count")
             ->join("{$this->resourceModel->table} AS r", 't.id = r.template_id', 'left')
@@ -25,7 +25,7 @@ class Templates extends BaseController
         
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\templates\list', $data);
+        echo view('Wagtail\Views\back\templates\templates\list', $data);
     }
     
     public function add()
@@ -69,8 +69,8 @@ class Templates extends BaseController
                     $this->templateVariableModel->insert($post_variable);
                 }
     
-                setVelldorisCookie('message', 'The template was successfully created.');
-                return $this->response->redirect(route_to('Velldoris\Controllers\Back\Templates::edit', $id));
+                setWagtailCookie('message', 'The template was successfully created.');
+                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::edit', $id));
             }
         }
         
@@ -86,7 +86,7 @@ class Templates extends BaseController
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\templates\add', $data);
+        echo view('Wagtail\Views\back\templates\templates\add', $data);
     }
     
     public function edit(int $id = 0)
@@ -145,8 +145,8 @@ class Templates extends BaseController
                         $this->templateVariableModel->delete($post_variable_id);
                 }
                 
-                setVelldorisCookie('message', 'The template was successfully updated.');
-                return $this->response->redirect(route_to('Velldoris\Controllers\Back\Templates::edit', $id));
+                setWagtailCookie('message', 'The template was successfully updated.');
+                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::edit', $id));
             }
         }
     
@@ -161,26 +161,26 @@ class Templates extends BaseController
                 'template' => $template,
                 'variables_options' => ! empty($variables) ? array_combine(array_column($variables, 'id'), array_column($variables, 'title')) : [],
                 'template_variables_options' => ! empty($template_variables) ? array_combine(array_column($template_variables, 'variable_id'), $template_variables) : [],
-                'message' => getVelldorisCookie('message', true) ?? $message ?? '',
+                'message' => getWagtailCookie('message', true) ?? $message ?? '',
                 'errors' => $errors ?? [],
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\templates\edit', $data);
+        echo view('Wagtail\Views\back\templates\templates\edit', $data);
     }
     
     public function activate($id)
     {
         $this->templateModel->update($id, ['active' => 1]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Templates::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
     }
     
     public function deactivate($id)
     {
         $this->templateModel->update($id, ['active' => 0]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Templates::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
     }
     
     public function delete($id)
@@ -188,7 +188,7 @@ class Templates extends BaseController
         $this->templateModel->delete($id);
         $this->templateVariableModel->where('template_id', $id)->delete();
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Templates::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
     }
     
     public function deleteAll()
@@ -201,10 +201,10 @@ class Templates extends BaseController
         foreach($template_variables as $template_variable)
             $this->templateVariableModel->delete($template_variable->id);
     
-        $db = $this->velldorisModel->db;
+        $db = $this->wagtailModel->db;
         $db->table($this->templateModel->table)->truncate();
         $db->table($this->templateVariableModel->table)->truncate();
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Templates::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
     }
 }

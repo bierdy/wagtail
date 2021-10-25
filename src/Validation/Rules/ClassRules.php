@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Validation\Rules;
+namespace Wagtail\Validation\Rules;
 
 class ClassRules
 {

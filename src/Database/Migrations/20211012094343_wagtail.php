@@ -1,11 +1,11 @@
 <?php
 
-namespace Velldoris\Database\Migrations;
+namespace Wagtail\Database\Migrations;
 
-use Velldoris\Database\VelldorisMigration;
+use Wagtail\Database\WagtailMigration;
 use CodeIgniter\CLI\CLI;
 
-class Velldoris20211012094343 extends VelldorisMigration
+class Wagtail20211012094343 extends WagtailMigration
 {
     protected $tables = [
         'resources' => [
@@ -217,7 +217,7 @@ class Velldoris20211012094343 extends VelldorisMigration
         foreach($this->tables as $table_name => $fields)
             if ($this->db->tableExists($table_name))
             {
-                CLI::write(CLI::color("Velldoris package installation error: table '{$table_name}' already exist. Delete this table and try install again.", 'red') . PHP_EOL);
+                CLI::write(CLI::color("Wagtail package installation error: table '{$table_name}' already exist. Delete this table and try install again.", 'red') . PHP_EOL);
                 exit;
             }
         

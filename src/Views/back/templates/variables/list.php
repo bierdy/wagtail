@@ -1,9 +1,9 @@
-<?= $this->extend('Velldoris\Views\back\templates\default'); ?>
+<?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
     <?php if (! empty($variables)) : ?>
         <p class="text-end">Variables count: <?= count($variables); ?></p>
-        <p class="text-end"><?= anchor(route_to('Velldoris\Controllers\Back\Variables::deleteAll'), 'Delete all variables', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all variables?' . PHP_EOL . 'All values also will be deleted.']); ?></p>
+        <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Variables::deleteAll'), 'Delete all variables', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all variables?' . PHP_EOL . 'All values also will be deleted.']); ?></p>
         <div class="table-responsive">
             <table class="table link-secondary">
                 <thead class="table-light">
@@ -24,7 +24,7 @@
                         <tr>
                             <td><?= $variable->id; ?></td>
                             <td>
-                                <a class="link-secondary text-decoration-none" href="<?= route_to('Velldoris\Controllers\Back\Variables::edit', $variable->id); ?>"><?= $variable->title; ?></a>
+                                <a class="link-secondary text-decoration-none" href="<?= route_to('Wagtail\Controllers\Back\Variables::edit', $variable->id); ?>"><?= $variable->title; ?></a>
                             </td>
                             <td><?= $variable->name; ?></td>
                             <td><?= $variable->language_title; ?></td>
@@ -35,11 +35,11 @@
                             <td>
                                 <div class="text-end">
                                     <?php if (empty($variable->active)) : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Variables::activate', $variable->id); ?>"><i class="bi bi-toggle-off"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Variables::activate', $variable->id); ?>"><i class="bi bi-toggle-off"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Velldoris\Controllers\Back\Variables::deactivate', $variable->id); ?>"><i class="bi bi-toggle-on"></i></a>
+                                        <a href="<?= route_to('Wagtail\Controllers\Back\Variables::deactivate', $variable->id); ?>"><i class="bi bi-toggle-on"></i></a>
                                     <?php endif ?>
-                                    <a href="<?= route_to('Velldoris\Controllers\Back\Variables::delete', $variable->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete variable &quot;<?= $variable->title; ?>&quot;?<?= PHP_EOL; ?>The values of this variable for all resources using this variable also will be deleted."><i class="bi bi-trash link-danger"></i></a>
+                                    <a href="<?= route_to('Wagtail\Controllers\Back\Variables::delete', $variable->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete variable &quot;<?= $variable->title; ?>&quot;?<?= PHP_EOL; ?>The values of this variable for all resources using this variable also will be deleted."><i class="bi bi-trash link-danger"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -51,6 +51,6 @@
         <p>There are no variables.</p>
     <?php endif ?>
     <div class="overflow-hidden">
-        <?= anchor(route_to('Velldoris\Controllers\Back\Variables::add'), 'Add variable', ['class' => 'btn btn-primary float-end']); ?>
+        <?= anchor(route_to('Wagtail\Controllers\Back\Variables::add'), 'Add variable', ['class' => 'btn btn-primary float-end']); ?>
     </div>
 <?= $this->endSection(); ?>

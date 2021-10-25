@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Controllers\Back;
+namespace Wagtail\Controllers\Back;
 
 class Home extends BaseController
 {
@@ -12,6 +12,6 @@ class Home extends BaseController
         
         $data = array_merge($this->default_data, $custom_data);
         
-        return view('Velldoris\Views\back\templates\home', $data);
+        return view('Wagtail\Views\back\templates\home', $data);
     }
 }

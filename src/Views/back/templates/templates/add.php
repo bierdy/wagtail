@@ -1,4 +1,4 @@
-<?= $this->extend('Velldoris\Views\back\templates\default'); ?>
+<?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
     <?php if (! empty($errors)) : ?>
@@ -47,7 +47,7 @@
             </div>
         <?php endif; ?>
         <div class="mb-3 overflow-hidden">
-            <?= anchor(route_to('Velldoris\Controllers\Back\Templates::list'), 'Back', ['class' => 'btn btn-secondary float-start']); ?>
+            <?= anchor(route_to('Wagtail\Controllers\Back\Templates::list'), 'Back', ['class' => 'btn btn-secondary float-start']); ?>
             <?= form_submit('submit', 'Add', ['class' => 'btn btn-primary float-end']); ?>
         </div>
     <?= form_close(); ?>

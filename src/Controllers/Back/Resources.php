@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Controllers\Back;
+namespace Wagtail\Controllers\Back;
 
 class Resources extends BaseController
 {
@@ -22,8 +22,8 @@ class Resources extends BaseController
                 $id = $this->resourceModel->insert($post);
                 $this->resourceModel->updateUrl($id);
     
-                setVelldorisCookie('message', 'The resource was successfully created.');
-                return $this->response->redirect(route_to('Velldoris\Controllers\Back\Resources::edit', $id));
+                setWagtailCookie('message', 'The resource was successfully created.');
+                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Resources::edit', $id));
             }
         }
     
@@ -41,7 +41,7 @@ class Resources extends BaseController
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\resources\add', $data);
+        echo view('Wagtail\Views\back\templates\resources\add', $data);
     }
     
     public function edit(int $id = 0)
@@ -71,8 +71,8 @@ class Resources extends BaseController
                     foreach($variables as $variable)
                         (new $variable->class($post, $resource, $variable))->init();
                 
-                setVelldorisCookie('message', 'The resource was successfully updated.');
-                return $this->response->redirect(route_to('Velldoris\Controllers\Back\Resources::edit', $id));
+                setWagtailCookie('message', 'The resource was successfully updated.');
+                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Resources::edit', $id));
             }
         }
         
@@ -87,12 +87,12 @@ class Resources extends BaseController
                 'parent' => $parent,
                 'template' => $template,
                 'variables' => $variables,
-                'message' => getVelldorisCookie('message', true) ?? $message ?? '',
+                'message' => getWagtailCookie('message', true) ?? $message ?? '',
                 'errors' => $errors ?? [],
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\resources\edit', $data);
+        echo view('Wagtail\Views\back\templates\resources\edit', $data);
     }
     
     public function activate(int $id = 0)
@@ -141,7 +141,7 @@ class Resources extends BaseController
         // /Delete variable values
         
         // Delete cookie open branches
-        $cookies_resources_tree = getVelldorisCookie('resources_tree');
+        $cookies_resources_tree = getWagtailCookie('resources_tree');
         $cookies_resources_tree = ! is_null($cookies_resources_tree) ? json_decode($cookies_resources_tree) : null;
         $cookies_resources_tree_open_branches = ! empty($cookies_resources_tree->open_branches) && is_array($cookies_resources_tree->open_branches) ? $cookies_resources_tree->open_branches : [];
         
@@ -150,15 +150,15 @@ class Resources extends BaseController
             $cookies_resources_tree_open_branches = array_diff($cookies_resources_tree_open_branches, $resources_ids);
             $cookies_resources_tree->open_branches = array_values($cookies_resources_tree_open_branches);
             
-            setVelldorisCookie('resources_tree', json_encode($cookies_resources_tree));
+            setWagtailCookie('resources_tree', json_encode($cookies_resources_tree));
         }
         // /Delete cookie open branches
         
         $this->resourceModel->whereIn('id', $resources_ids)->delete();
     
-        deleteVelldorisCookie('message');
+        deleteWagtailCookie('message');
     
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Home::index'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Home::index'));
     }
     
     public function setTemplate(int $id = 0, int $template_id = 0)
@@ -179,8 +179,8 @@ class Resources extends BaseController
         
         $this->resourceModel->update($id, ['template_id' => $template_id]);
         
-        setVelldorisCookie('message', 'Template was successfully changed.');
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Resources::edit', $id));
+        setWagtailCookie('message', 'Template was successfully changed.');
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Resources::edit', $id));
     }
     
     public function setParent(int $id = 0, int $parent_id = 0)

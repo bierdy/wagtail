@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Config;
+namespace Wagtail\Config;
 
 use CodeIgniter\Config\BaseService;
 
@@ -30,11 +30,11 @@ class Services extends BaseService
      * }
      */
 
-    public static function Velldoris($getShared = true)
+    public static function Wagtail($getShared = true)
     {
         if ($getShared)
-            return static::getSharedInstance('Velldoris');
+            return static::getSharedInstance('Wagtail');
         
-        return new \Velldoris\Services\Velldoris();
+        return new \Wagtail\Services\Wagtail();
     }
 }

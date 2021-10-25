@@ -1,8 +1,8 @@
 <?php
 
-namespace Velldoris\Models;
+namespace Wagtail\Models;
 
-class Variable extends Velldoris
+class Variable extends Wagtail
 {
     protected $table = 'variables';
     protected $primaryKey = 'id';
@@ -23,7 +23,7 @@ class Variable extends Velldoris
     protected $validationRules = [
         'title' => 'required|is_unique[variables.title,id,{id}]',
         'name' => 'required|is_unique[variables.name,id,{id}]|alpha_dash',
-        'class' => 'required|is_class_exist|class_is_not_implement_interface[Velldoris\Variables\VariableInterface]',
+        'class' => 'required|is_class_exist|class_is_not_implement_interface[Wagtail\Variables\VariableInterface]',
         'options' => 'permit_empty|valid_json',
         'template' => 'required',
         'validation_rules' => 'permit_empty|valid_json',

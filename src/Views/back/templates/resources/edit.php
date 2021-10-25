@@ -1,4 +1,4 @@
-<?= $this->extend('Velldoris\Views\back\templates\default'); ?>
+<?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
     <?php if (! empty($errors)) : ?>

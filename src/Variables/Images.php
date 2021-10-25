@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Variables;
+namespace Wagtail\Variables;
 
 class Images extends Variable implements VariableInterface
 {

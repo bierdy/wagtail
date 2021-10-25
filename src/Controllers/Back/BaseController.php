@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Controllers\Back;
+namespace Wagtail\Controllers\Back;
 
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
@@ -35,12 +35,12 @@ class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['filesystem', 'html', 'form', 'cookie', 'velldoris'];
+    protected $helpers = ['filesystem', 'html', 'form', 'cookie', 'wagtail'];
     
     protected $default_data = [];
     
-    protected $velldoris_cookie_config = null;
-    protected $velldorisModel = null;
+    protected $wagtail_cookie_config = null;
+    protected $wagtailModel = null;
     protected $resourceModel = null;
     protected $templateModel = null;
     protected $templateVariableModel = null;
@@ -61,8 +61,8 @@ class BaseController extends Controller
         
         // E.g.: $this->session = \Config\Services::session();
         
-        $this->velldoris_cookie_config = config('VelldorisCookie');
-        $this->velldorisModel = model('Velldoris');
+        $this->wagtail_cookie_config = config('WagtailCookie');
+        $this->wagtailModel = model('Wagtail');
         $this->resourceModel = model('Resource');
         $this->templateModel = model('Template');
         $this->templateVariableModel = model('TemplateVariable');
@@ -71,20 +71,20 @@ class BaseController extends Controller
         $this->variableValueModel = model('VariableValue');
         $this->affiliateService = service('Affiliate');
         
-        $velldoris_cookie_config = [
-            'prefix' => $this->velldoris_cookie_config->prefix,
-            'expires' => $this->velldoris_cookie_config->expires,
-            'path' => $this->velldoris_cookie_config->path,
-            'domain' => $this->velldoris_cookie_config->domain,
-            'secure' => $this->velldoris_cookie_config->secure,
-            'samesite' => $this->velldoris_cookie_config->samesite,
+        $wagtail_cookie_config = [
+            'prefix' => $this->wagtail_cookie_config->prefix,
+            'expires' => $this->wagtail_cookie_config->expires,
+            'path' => $this->wagtail_cookie_config->path,
+            'domain' => $this->wagtail_cookie_config->domain,
+            'secure' => $this->wagtail_cookie_config->secure,
+            'samesite' => $this->wagtail_cookie_config->samesite,
         ];
         
         $this->default_data =
             [
                 'title' => '',
                 'resources_tree' => $this->resourceModel->getResourcesTree(),
-                'velldoris_cookie_config' => json_encode($velldoris_cookie_config),
+                'wagtail_cookie_config' => json_encode($wagtail_cookie_config),
             ];
     }
 }

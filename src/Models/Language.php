@@ -1,8 +1,8 @@
 <?php
 
-namespace Velldoris\Models;
+namespace Wagtail\Models;
 
-class Language extends Velldoris
+class Language extends Wagtail
 {
     protected $table = 'languages';
     protected $primaryKey = 'id';

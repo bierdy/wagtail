@@ -1,12 +1,12 @@
 <?php
 
-namespace Velldoris\Config;
+namespace Wagtail\Config;
 
 use CodeIgniter\Config\BaseConfig;
 
-class VelldorisApp extends BaseConfig
+class WagtailApp extends BaseConfig
 {
-    public $DBGroup = 'velldoris';
+    public $DBGroup = 'wagtail';
     
     public $backRootPath = 'admin';
     

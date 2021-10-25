@@ -1,8 +1,8 @@
 <?php
 
-namespace Velldoris\Models;
+namespace Wagtail\Models;
 
-class Template extends Velldoris
+class Template extends Wagtail
 {
     protected $table = 'templates';
     protected $primaryKey = 'id';

@@ -1,4 +1,4 @@
-<?= anchor(route_to('Velldoris\Controllers\Back\Resources::add', 0), 'Add resource', ['class' => 'btn btn-light']); ?>
+<?= anchor(route_to('Wagtail\Controllers\Back\Resources::add', 0), 'Add resource', ['class' => 'btn btn-light']); ?>
 
 <?php if (! empty($resources_tree)) : ?>
     <div class="resources-tree mt-3">

@@ -1,11 +1,11 @@
 <?php
 
-namespace Velldoris\Config;
+namespace Wagtail\Config;
 
-$velldoris_app_config = config('VelldorisApp');
+$wagtail_app_config = config('WagtailApp');
 $routes = service('Routes');
 
-$routes->group($velldoris_app_config->backRootPath, ['namespace' => 'Velldoris\Controllers\Back', 'hostname' => $velldoris_app_config->backDomain], function($routes)
+$routes->group($wagtail_app_config->backRootPath, ['namespace' => 'Wagtail\Controllers\Back', 'hostname' => $wagtail_app_config->backDomain], function($routes)
 {
     $routes->get('', 'Home::index');
     

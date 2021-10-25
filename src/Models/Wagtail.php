@@ -1,18 +1,18 @@
 <?php
 
-namespace Velldoris\Models;
+namespace Wagtail\Models;
 
 use CodeIgniter\Model;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Validation\ValidationInterface;
 
-class Velldoris extends Model
+class Wagtail extends Model
 {
     public function __construct(? ConnectionInterface &$db = null, ? ValidationInterface $validation = null)
     {
-        $velldoris_app_config = config('VelldorisApp');
+        $wagtail_app_config = config('WagtailApp');
         
-        $this->DBGroup = $velldoris_app_config->DBGroup;
+        $this->DBGroup = $wagtail_app_config->DBGroup;
         
         parent::__construct($db, $validation);
     }

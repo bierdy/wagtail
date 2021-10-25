@@ -1,12 +1,12 @@
 <?php
 
-namespace Velldoris\Controllers\Back;
+namespace Wagtail\Controllers\Back;
 
 class Languages extends BaseController
 {
     public function list()
     {
-        $languages = $this->velldorisModel->db
+        $languages = $this->wagtailModel->db
             ->table("{$this->languageModel->table} AS l")
             ->select("l.*, COUNT(DISTINCT v.id) AS variables_count")
             ->join("{$this->variableModel->table} AS v", 'l.id = v.language_id', 'left')
@@ -25,7 +25,7 @@ class Languages extends BaseController
         
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\languages\list', $data);
+        echo view('Wagtail\Views\back\templates\languages\list', $data);
     }
     
     public function add()
@@ -39,8 +39,8 @@ class Languages extends BaseController
         }
         elseif (! empty($post))
         {
-            setVelldorisCookie('message', 'The language was successfully created.');
-            return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::edit', $id));
+            setWagtailCookie('message', 'The language was successfully created.');
+            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::edit', $id));
         }
         
         $custom_data =
@@ -52,7 +52,7 @@ class Languages extends BaseController
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\languages\add', $data);
+        echo view('Wagtail\Views\back\templates\languages\add', $data);
     }
     
     public function edit(int $id = 0)
@@ -66,8 +66,8 @@ class Languages extends BaseController
         }
         elseif (! empty($post))
         {
-            setVelldorisCookie('message', 'The language was successfully updated.');
-            return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::edit', $id));
+            setWagtailCookie('message', 'The language was successfully updated.');
+            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::edit', $id));
         }
     
         $language = $this->languageModel->find($id);
@@ -77,33 +77,33 @@ class Languages extends BaseController
                 'title' => 'Edit language "' . $language->title . '"',
                 'post' => $post,
                 'language' => $language,
-                'message' => getVelldorisCookie('message', true) ?? $message ?? '',
+                'message' => getWagtailCookie('message', true) ?? $message ?? '',
                 'errors' => $errors ?? [],
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\languages\edit', $data);
+        echo view('Wagtail\Views\back\templates\languages\edit', $data);
     }
     
     public function activate($id)
     {
         $this->languageModel->update($id, ['active' => 1]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
     }
     
     public function deactivate($id)
     {
         $this->languageModel->update($id, ['active' => 0]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
     }
     
     public function delete($id)
     {
         $this->languageModel->delete($id);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
     }
     
     public function deleteAll()
@@ -112,9 +112,9 @@ class Languages extends BaseController
         foreach($languages as $language)
             $this->languageModel->delete($language->id);
         
-        $this->velldorisModel->db->table($this->languageModel->table)->truncate();
+        $this->wagtailModel->db->table($this->languageModel->table)->truncate();
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
     }
     
     public function setDefault($id)
@@ -122,6 +122,6 @@ class Languages extends BaseController
         $this->languageModel->where('default', 1)->set(['default' => 0])->update();
         $this->languageModel->update($id, ['default' => 1]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Languages::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
     }
 }

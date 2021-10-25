@@ -9,7 +9,7 @@
             <?php foreach ($images as $image) { ?>
                 <?php
                 $image_src = $image_path . $image->value;
-                $delete_link = route_to('Velldoris\Controllers\Back\Variables::deleteValue', $image->id);
+                $delete_link = route_to('Wagtail\Controllers\Back\Variables::deleteValue', $image->id);
                 ?>
                 <div class="input-image">
                     <img class="image" src="<?= $image_src; ?>" height="<?= $image_height; ?>">

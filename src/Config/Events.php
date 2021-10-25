@@ -1,6 +1,6 @@
 <?php
 
-namespace Velldoris\Config;
+namespace Wagtail\Config;
 
 use CodeIgniter\Events\Events;
 use Config\Services;
@@ -26,10 +26,10 @@ Events::on('pre_system', static function ()
 {
     $config_validation_rule_sets = config('Validation')->ruleSets;
     
-    $validation_class_rules_class = \Velldoris\Validation\Rules\ClassRules::class;
+    $validation_class_rules_class = \Wagtail\Validation\Rules\ClassRules::class;
     
     if (! in_array($validation_class_rules_class, $config_validation_rule_sets))
         config('Validation')->ruleSets[] = $validation_class_rules_class;
 });
 
-Events::on('pre_system', [service('Velldoris'), 'setResourceRoute']);
+Events::on('pre_system', [service('Wagtail'), 'setResourceRoute']);

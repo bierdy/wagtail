@@ -1,8 +1,8 @@
 <?php
 
-namespace Velldoris\Models;
+namespace Wagtail\Models;
 
-class Resource extends Velldoris
+class Resource extends Wagtail
 {
     protected $table = 'resources';
     protected $primaryKey = 'id';
@@ -77,7 +77,7 @@ class Resource extends Velldoris
     
     public function getResourceChilds(int $id) : array
     {
-        $velldorisModel = model('Velldoris');
+        $wagtailModel = model('Wagtail');
         $templateModel = model('Template');
         
         $query = "
@@ -111,7 +111,7 @@ class Resource extends Velldoris
                 cte_{$this->table}.order;
         ";
     
-        return $velldorisModel->db->query($query)->getResult();
+        return $wagtailModel->db->query($query)->getResult();
     }
     
     protected function addAvailableTemplates($resources) : array
@@ -234,12 +234,12 @@ class Resource extends Velldoris
         $resource = $this->find($id);
         $resource_neighbors = $this->where('parent_id', $resource->parent_id)->where('id !=', $id)->findAll();
         $resource_neighbors_urls = array_column($resource_neighbors, 'url');
-        $velldoris_app_config = config('VelldorisApp');
+        $wagtail_app_config = config('WagtailApp');
     
-        $resource_url = ! empty($resource->url) ? $resource->url : mb_url_title($resource->title, $velldoris_app_config->resourceUrlSeparator, true);
+        $resource_url = ! empty($resource->url) ? $resource->url : mb_url_title($resource->title, $wagtail_app_config->resourceUrlSeparator, true);
         
         while(in_array($resource_url, $resource_neighbors_urls))
-            $resource_url .= $velldoris_app_config->resourceUrlSeparator . $velldoris_app_config->resourceUrlCopyPostfix;
+            $resource_url .= $wagtail_app_config->resourceUrlSeparator . $wagtail_app_config->resourceUrlCopyPostfix;
         
         $this->update($id, ['url' => $resource_url]);
     }

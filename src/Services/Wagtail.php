@@ -1,10 +1,10 @@
 <?php
 
-namespace Velldoris\Services;
+namespace Wagtail\Services;
 
 use CodeIgniter\Config\BaseService;
 
-class Velldoris extends BaseService
+class Wagtail extends BaseService
 {
     protected $resource = null;
     
@@ -14,19 +14,19 @@ class Velldoris extends BaseService
         if (is_cli())
             return;
         
-        helper('velldoris');
+        helper('wagtail');
         $routes = service('Routes');
         $resourceModel = model('Resource');
-        $velldoris_app_config = config('VelldorisApp');
+        $wagtail_app_config = config('WagtailApp');
         
         $uri_string = uri_string(true);
         $uri_string = ! empty($uri_string) ? $uri_string : '/';
         $uri_segments = explode('/', $uri_string);
         $uri_segments = array_diff($uri_segments, ['']);
-        if ($velldoris_app_config->frontRootPath === '/')
-            array_unshift($uri_segments, $velldoris_app_config->frontRootPath);
+        if ($wagtail_app_config->frontRootPath === '/')
+            array_unshift($uri_segments, $wagtail_app_config->frontRootPath);
     
-        // If front root path of velldoris app config is not match first uri segment stop work
+        // If front root path of wagtail app config is not match first uri segment stop work
         if (empty($uri_segments))
             return;
     
@@ -37,7 +37,7 @@ class Velldoris extends BaseService
             return;
         
         $this->setResource($resource);
-        $routes->add($uri_string, $resource->template_class_method, ['hostname' => $velldoris_app_config->frontDomain]);
+        $routes->add($uri_string, $resource->template_class_method, ['hostname' => $wagtail_app_config->frontDomain]);
     }
     
     public function getResource() : ? object

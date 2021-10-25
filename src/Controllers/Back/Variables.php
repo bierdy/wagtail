@@ -1,12 +1,12 @@
 <?php
 
-namespace Velldoris\Controllers\Back;
+namespace Wagtail\Controllers\Back;
 
 class Variables extends BaseController
 {
     public function list()
     {
-        $variables = $this->velldorisModel->db
+        $variables = $this->wagtailModel->db
             ->table("{$this->variableModel->table} AS v")
             ->select("v.*, COUNT(DISTINCT tv.id) AS templates_count, COUNT(DISTINCT vv.id) AS values_count, l.title AS language_title")
             ->join("{$this->templateVariableModel->table} AS tv", 'v.id = tv.variable_id', 'left')
@@ -29,7 +29,7 @@ class Variables extends BaseController
         
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\variables\list', $data);
+        echo view('Wagtail\Views\back\templates\variables\list', $data);
     }
     
     public function add()
@@ -43,8 +43,8 @@ class Variables extends BaseController
         }
         elseif (! empty($post))
         {
-            setVelldorisCookie('message', 'The variable was successfully created.');
-            return $this->response->redirect(route_to('Velldoris\Controllers\Back\Variables::edit', $id));
+            setWagtailCookie('message', 'The variable was successfully created.');
+            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::edit', $id));
         }
         
         $languages = $this->languageModel->findAll();
@@ -59,7 +59,7 @@ class Variables extends BaseController
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\variables\add', $data);
+        echo view('Wagtail\Views\back\templates\variables\add', $data);
     }
     
     public function edit(int $id = 0)
@@ -73,8 +73,8 @@ class Variables extends BaseController
         }
         elseif (! empty($post))
         {
-            setVelldorisCookie('message', 'The variable was successfully updated.');
-            return $this->response->redirect(route_to('Velldoris\Controllers\Back\Variables::edit', $id));
+            setWagtailCookie('message', 'The variable was successfully updated.');
+            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::edit', $id));
         }
     
         $variable = $this->variableModel->find($id);
@@ -86,26 +86,26 @@ class Variables extends BaseController
                 'post' => $post,
                 'variable' => $variable,
                 'languages_options' => ! empty($languages) ? ['' => 'Empty'] + array_combine(array_column($languages, 'id'), array_column($languages, 'title')) : ['' => 'Languages not found'],
-                'message' => getVelldorisCookie('message', true) ?? $message ?? '',
+                'message' => getWagtailCookie('message', true) ?? $message ?? '',
                 'errors' => $errors ?? [],
             ];
         $data = array_merge($this->default_data, $custom_data);
         
-        echo view('Velldoris\Views\back\templates\variables\edit', $data);
+        echo view('Wagtail\Views\back\templates\variables\edit', $data);
     }
     
     public function activate($id)
     {
         $this->variableModel->update($id, ['active' => 1]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Variables::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
     }
     
     public function deactivate($id)
     {
         $this->variableModel->update($id, ['active' => 0]);
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Variables::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
     }
     
     public function delete($id)
@@ -114,7 +114,7 @@ class Variables extends BaseController
         $this->templateVariableModel->where('variable_id', $id)->delete();
         $this->variableValueModel->where('variable_id', $id)->delete();
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Variables::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
     }
     
     public function deleteAll()
@@ -131,12 +131,12 @@ class Variables extends BaseController
         foreach($variable_values as $variable_value)
             $this->variableValueModel->delete($variable_value->id);
         
-        $db = $this->velldorisModel->db;
+        $db = $this->wagtailModel->db;
         $db->table($this->variableModel->table)->truncate();
         $db->table($this->templateVariableModel->table)->truncate();
         $db->table($this->variableValueModel->table)->truncate();
         
-        return $this->response->redirect(route_to('Velldoris\Controllers\Back\Variables::list'));
+        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
     }
     
     public function deleteValue(int $value_id = 0)
@@ -151,7 +151,7 @@ class Variables extends BaseController
         else
         {
             $this->variableValueModel->delete($value_id);
-            setVelldorisCookie('message', 'The value of "' . ucfirst(mb_strtolower($variable->title)) . '" variable was successfully deleted.');
+            setWagtailCookie('message', 'The value of "' . ucfirst(mb_strtolower($variable->title)) . '" variable was successfully deleted.');
         }
     
         return $this->response->redirect(previous_url());

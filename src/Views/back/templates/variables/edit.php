@@ -1,4 +1,4 @@
-<?= $this->extend('Velldoris\Views\back\templates\default'); ?>
+<?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
     <?php if (! empty($errors)) : ?>
@@ -44,7 +44,7 @@
             <?= form_dropdown('language_id', $languages_options, $post['language_id'] ?? $variable->language_id ?? '', ['class' => 'form-control' , 'id' => 'language_id']); ?>
         </div>
         <div class="mb-3 overflow-hidden">
-            <?= anchor(route_to('Velldoris\Controllers\Back\Variables::list'), 'Back', ['class' => 'btn btn-secondary float-start']); ?>
+            <?= anchor(route_to('Wagtail\Controllers\Back\Variables::list'), 'Back', ['class' => 'btn btn-secondary float-start']); ?>
             <?= form_submit('submit', 'Update', ['class' => 'btn btn-primary float-end']); ?>
         </div>
     <?= form_close(); ?>

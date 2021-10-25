@@ -1,11 +1,11 @@
 <?php
 
-namespace Velldoris\Config;
+namespace Wagtail\Config;
 
 use CodeIgniter\Config\BaseConfig;
 use DateTimeInterface;
 
-class VelldorisCookie extends BaseConfig
+class WagtailCookie extends BaseConfig
 {
     /**
      * --------------------------------------------------------------------------
@@ -16,7 +16,7 @@ class VelldorisCookie extends BaseConfig
      *
      * @var string
      */
-    public $prefix = 'velldoris_';
+    public $prefix = 'wagtail_';
 
     /**
      * --------------------------------------------------------------------------

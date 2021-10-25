@@ -1,17 +1,17 @@
 <?php
 
-namespace Velldoris\Database;
+namespace Wagtail\Database;
 
 use CodeIgniter\Database\Forge;
 use CodeIgniter\Database\Migration;
 
-abstract class VelldorisMigration extends Migration
+abstract class WagtailMigration extends Migration
 {
     public function __construct(? Forge $forge = null)
     {
-        $velldoris_app_config = config('VelldorisApp');
+        $wagtail_app_config = config('WagtailApp');
         
-        $this->DBGroup = $velldoris_app_config->DBGroup;
+        $this->DBGroup = $wagtail_app_config->DBGroup;
     
         parent::__construct($forge);
     }
