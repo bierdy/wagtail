@@ -110,7 +110,7 @@ class Resource extends Wagtail
             ORDER BY
                 cte_{$this->table}.order;
         ";
-    
+        
         return $wagtailModel->db->query($query)->getResult();
     }
     
@@ -128,7 +128,7 @@ class Resource extends Wagtail
                 unset($available_templates[$resource->template_id]);
             
             $resource->available_templates = $available_templates;
-        
+            
             return $resource;
         }, $resources);
     }
@@ -170,7 +170,7 @@ class Resource extends Wagtail
             
             if (count($uri_segment_resource) !== 1)
                 return null;
-    
+            
             $uri_segment_resource = $uri_segment_resource[0];
             
             $uri_segment_resource->variables = $variableModel
@@ -179,7 +179,7 @@ class Resource extends Wagtail
                 ->join('template_variables', 'template_variables.variable_id = variables.id', 'left')
                 ->orderBy('template_variables.order', 'ASC')
                 ->findAll();
-    
+            
             foreach($uri_segment_resource->variables as &$resource_variable)
             {
                 $resource_variable->values = $variableValueModel
@@ -189,11 +189,11 @@ class Resource extends Wagtail
                     ->orderBy('variable_values.order', 'ASC')
                     ->findAll();
             }
-    
+            
             $uri_segments_resources[] = $uri_segment_resource;
             $parent_id = $uri_segment_resource->id;
         }
-    
+        
         $uri_segment_resource_ = null;
         foreach($uri_segments_resources as $key => $uri_segment_resource)
         {
@@ -201,6 +201,7 @@ class Resource extends Wagtail
             {
                 $uri_segment_resource_ = $uri_segment_resource;
                 $uri_segment_resource_->parent = null;
+                $resource = $uri_segment_resource_;
                 continue;
             }
     
