@@ -33,7 +33,7 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a class="link-secondary text-decoration-none" href="<?= route_to('Wagtail\Controllers\Back\Templates::edit', $template->id); ?>"><?= $template->title; ?></a>
+                                <a class="link-secondary text-decoration-none" href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::edit', $template->id)); ?>"><?= $template->title; ?></a>
                             </td>
                             <td><?= $template->class_method; ?></td>
                             <td>
@@ -47,14 +47,14 @@
                             <td>
                                 <div class="text-end">
                                     <?php if (empty($template->active)) : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::activate', $template->id); ?>"><i class="bi bi-toggle-off"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::activate', $template->id)); ?>"><i class="bi bi-toggle-off"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::deactivate', $template->id); ?>"><i class="bi bi-toggle-on"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::deactivate', $template->id)); ?>"><i class="bi bi-toggle-on"></i></a>
                                     <?php endif; ?>
                                     <?php if (! empty($template->resources_count)) : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::delete', $template->id); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $template->resources_count; ?> resources with the template &quot;<?= $template->title; ?>&quot;. To delete a template uninstall this template from all resources assigned it."><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::delete', $template->id)); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $template->resources_count; ?> resources with the template &quot;<?= $template->title; ?>&quot;. To delete a template uninstall this template from all resources assigned it."><i class="bi bi-trash link-danger"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Templates::delete', $template->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete template &quot;<?= $template->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::delete', $template->id)); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete template &quot;<?= $template->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </td>

@@ -40,7 +40,7 @@ class Languages extends BaseController
         elseif (! empty($post))
         {
             setWagtailCookie('message', 'The language was successfully created.');
-            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::edit', $id));
+            return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::edit', $id)));
         }
         
         $custom_data =
@@ -67,7 +67,7 @@ class Languages extends BaseController
         elseif (! empty($post))
         {
             setWagtailCookie('message', 'The language was successfully updated.');
-            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::edit', $id));
+            return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::edit', $id)));
         }
     
         $language = $this->languageModel->find($id);
@@ -89,21 +89,21 @@ class Languages extends BaseController
     {
         $this->languageModel->update($id, ['active' => 1]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::list')));
     }
     
     public function deactivate($id)
     {
         $this->languageModel->update($id, ['active' => 0]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::list')));
     }
     
     public function delete($id)
     {
         $this->languageModel->delete($id);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::list')));
     }
     
     public function deleteAll()
@@ -114,7 +114,7 @@ class Languages extends BaseController
         
         $this->wagtailModel->db->table($this->languageModel->table)->truncate();
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::list')));
     }
     
     public function setDefault($id)
@@ -122,6 +122,6 @@ class Languages extends BaseController
         $this->languageModel->where('default', 1)->set(['default' => 0])->update();
         $this->languageModel->update($id, ['default' => 1]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Languages::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Languages::list')));
     }
 }

@@ -70,7 +70,7 @@ class Templates extends BaseController
                 }
     
                 setWagtailCookie('message', 'The template was successfully created.');
-                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::edit', $id));
+                return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::edit', $id)));
             }
         }
         
@@ -146,7 +146,7 @@ class Templates extends BaseController
                 }
                 
                 setWagtailCookie('message', 'The template was successfully updated.');
-                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::edit', $id));
+                return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::edit', $id)));
             }
         }
     
@@ -173,14 +173,14 @@ class Templates extends BaseController
     {
         $this->templateModel->update($id, ['active' => 1]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::list')));
     }
     
     public function deactivate($id)
     {
         $this->templateModel->update($id, ['active' => 0]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::list')));
     }
     
     public function delete($id)
@@ -188,7 +188,7 @@ class Templates extends BaseController
         $this->templateModel->delete($id);
         $this->templateVariableModel->where('template_id', $id)->delete();
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::list')));
     }
     
     public function deleteAll()
@@ -205,6 +205,6 @@ class Templates extends BaseController
         $db->table($this->templateModel->table)->truncate();
         $db->table($this->templateVariableModel->table)->truncate();
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Templates::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::list')));
     }
 }

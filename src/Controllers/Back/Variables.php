@@ -44,7 +44,7 @@ class Variables extends BaseController
         elseif (! empty($post))
         {
             setWagtailCookie('message', 'The variable was successfully created.');
-            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::edit', $id));
+            return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::edit', $id)));
         }
         
         $languages = $this->languageModel->findAll();
@@ -74,7 +74,7 @@ class Variables extends BaseController
         elseif (! empty($post))
         {
             setWagtailCookie('message', 'The variable was successfully updated.');
-            return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::edit', $id));
+            return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::edit', $id)));
         }
     
         $variable = $this->variableModel->find($id);
@@ -98,14 +98,14 @@ class Variables extends BaseController
     {
         $this->variableModel->update($id, ['active' => 1]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::list')));
     }
     
     public function deactivate($id)
     {
         $this->variableModel->update($id, ['active' => 0]);
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::list')));
     }
     
     public function delete($id)
@@ -114,7 +114,7 @@ class Variables extends BaseController
         $this->templateVariableModel->where('variable_id', $id)->delete();
         $this->variableValueModel->where('variable_id', $id)->delete();
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::list')));
     }
     
     public function deleteAll()
@@ -136,7 +136,7 @@ class Variables extends BaseController
         $db->table($this->templateVariableModel->table)->truncate();
         $db->table($this->variableValueModel->table)->truncate();
         
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Variables::list'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::list')));
     }
     
     public function deleteValue(int $value_id = 0)

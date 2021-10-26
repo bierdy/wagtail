@@ -8,7 +8,7 @@
         <title><?= $title; ?></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
-        <link href="<?= route_to('Wagtail\Controllers\Back\Assets::css', 'styles'); ?>" rel="stylesheet" type="text/css">
+        <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::css', 'styles')); ?>" rel="stylesheet" type="text/css">
         <script>
             window.wagtail_cookie_config = <?= $wagtail_cookie_config; ?>;
         </script>
@@ -33,6 +33,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
-        <script src="<?= route_to('Wagtail\Controllers\Back\Assets::js', 'app'); ?>"></script>
+        <script src="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::js', 'app')); ?>"></script>
     </body>
 </html>

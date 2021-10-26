@@ -23,7 +23,7 @@ class Resources extends BaseController
                 $this->resourceModel->updateUrl($id);
     
                 setWagtailCookie('message', 'The resource was successfully created.');
-                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Resources::edit', $id));
+                return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Resources::edit', $id)));
             }
         }
     
@@ -72,7 +72,7 @@ class Resources extends BaseController
                         (new $variable->class($post, $resource, $variable))->init();
                 
                 setWagtailCookie('message', 'The resource was successfully updated.');
-                return $this->response->redirect(route_to('Wagtail\Controllers\Back\Resources::edit', $id));
+                return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Resources::edit', $id)));
             }
         }
         
@@ -158,7 +158,7 @@ class Resources extends BaseController
     
         deleteWagtailCookie('message');
     
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Home::index'));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Home::index')));
     }
     
     public function setTemplate(int $id = 0, int $template_id = 0)
@@ -180,7 +180,7 @@ class Resources extends BaseController
         $this->resourceModel->update($id, ['template_id' => $template_id]);
         
         setWagtailCookie('message', 'Template was successfully changed.');
-        return $this->response->redirect(route_to('Wagtail\Controllers\Back\Resources::edit', $id));
+        return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Resources::edit', $id)));
     }
     
     public function setParent(int $id = 0, int $parent_id = 0)

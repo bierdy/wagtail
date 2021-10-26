@@ -24,7 +24,7 @@
                         <tr>
                             <td><?= $variable->id; ?></td>
                             <td>
-                                <a class="link-secondary text-decoration-none" href="<?= route_to('Wagtail\Controllers\Back\Variables::edit', $variable->id); ?>"><?= $variable->title; ?></a>
+                                <a class="link-secondary text-decoration-none" href="<?= base_url(route_to('Wagtail\Controllers\Back\Variables::edit', $variable->id)); ?>"><?= $variable->title; ?></a>
                             </td>
                             <td><?= $variable->name; ?></td>
                             <td><?= $variable->language_title; ?></td>
@@ -35,11 +35,11 @@
                             <td>
                                 <div class="text-end">
                                     <?php if (empty($variable->active)) : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Variables::activate', $variable->id); ?>"><i class="bi bi-toggle-off"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Variables::activate', $variable->id)); ?>"><i class="bi bi-toggle-off"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Variables::deactivate', $variable->id); ?>"><i class="bi bi-toggle-on"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Variables::deactivate', $variable->id)); ?>"><i class="bi bi-toggle-on"></i></a>
                                     <?php endif ?>
-                                    <a href="<?= route_to('Wagtail\Controllers\Back\Variables::delete', $variable->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete variable &quot;<?= $variable->title; ?>&quot;?<?= PHP_EOL; ?>The values of this variable for all resources using this variable also will be deleted."><i class="bi bi-trash link-danger"></i></a>
+                                    <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Variables::delete', $variable->id)); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete variable &quot;<?= $variable->title; ?>&quot;?<?= PHP_EOL; ?>The values of this variable for all resources using this variable also will be deleted."><i class="bi bi-trash link-danger"></i></a>
                                 </div>
                             </td>
                         </tr>

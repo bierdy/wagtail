@@ -7,16 +7,16 @@
             <div class="collapse navbar-collapse" id="header-menu">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Home::index')) ? ' active text-decoration-underline' : ''; ?> ps-0" href="<?= route_to('Wagtail\Controllers\Back\Home::index'); ?>">Home</a>
+                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Home::index')) ? ' active text-decoration-underline' : ''; ?> ps-0" href="<?= base_url(route_to('Wagtail\Controllers\Back\Home::index')); ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Templates::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= route_to('Wagtail\Controllers\Back\Templates::list'); ?>">Templates</a>
+                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Templates::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::list')); ?>">Templates</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Variables::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= route_to('Wagtail\Controllers\Back\Variables::list'); ?>">Variables</a>
+                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Variables::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= base_url(route_to('Wagtail\Controllers\Back\Variables::list')); ?>">Variables</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Languages::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= route_to('Wagtail\Controllers\Back\Languages::list'); ?>">Languages</a>
+                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Languages::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::list')); ?>">Languages</a>
                     </li>
                     
                     <!--

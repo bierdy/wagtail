@@ -35,12 +35,12 @@ if (! function_exists('buildResourcesTree'))
                 $is_childs_exist = ! empty($branch->childs);
                 $childs = $is_childs_exist ? $branch->childs : [];
     
-                $edit_link = "<a class='title link-secondary' href='" . route_to("Wagtail\Controllers\Back\Resources::edit", $branch->id) . "' draggable='true'>";
+                $edit_link = "<a class='title link-secondary' href='" . base_url(route_to("Wagtail\Controllers\Back\Resources::edit", $branch->id)) . "' draggable='true'>";
                     $edit_link .= "<i class='template-icon {$branch->template_icon} link-secondary'></i>";
                     $edit_link .= "{$branch->title}";
                 $edit_link .= "</a>";
                 
-                $add_link = "<li><a class='dropdown-item' href='" . route_to('Wagtail\Controllers\Back\Resources::add', $branch->id) . "'>Add resource</a></li>";
+                $add_link = "<li><a class='dropdown-item' href='" . base_url(route_to('Wagtail\Controllers\Back\Resources::add', $branch->id)) . "'>Add resource</a></li>";
     
                 $set_template_links = '';
                 if (! empty($branch->available_templates))
@@ -51,7 +51,7 @@ if (! function_exists('buildResourcesTree'))
                         foreach($branch->available_templates as $available_template)
                         {
                             $set_template_links .= "<li>";
-                                $set_template_links .= "<a class='dropdown-item modal-confirm-link' href='" . route_to('Wagtail\Controllers\Back\Resources::setTemplate', $branch->id, $available_template->id) . "' data-confirm-link-text='Are you sure you want to set &quot;" . ucfirst(mb_strtolower($available_template->title)) . "&quot; template?" . PHP_EOL . "All resource variables will be deleted!'>";
+                                $set_template_links .= "<a class='dropdown-item modal-confirm-link' href='" . base_url(route_to('Wagtail\Controllers\Back\Resources::setTemplate', $branch->id, $available_template->id)) . "' data-confirm-link-text='Are you sure you want to set &quot;" . ucfirst(mb_strtolower($available_template->title)) . "&quot; template?" . PHP_EOL . "All resource variables will be deleted!'>";
                                     if (! empty($available_template->icon))
                                         $set_template_links .= "<i class='{$available_template->icon} link-secondary me-1'></i>";
                                     $set_template_links .= $available_template->title;
@@ -65,11 +65,11 @@ if (! function_exists('buildResourcesTree'))
                 $activate_link = '';
                 $deactivate_link = '';
                 if (empty($branch->active))
-                    $activate_link = "<li><a class='dropdown-item' href='" . route_to('Wagtail\Controllers\Back\Resources::activate', $branch->id) . "'>Activate</a></li>";
+                    $activate_link = "<li><a class='dropdown-item' href='" . base_url(route_to('Wagtail\Controllers\Back\Resources::activate', $branch->id)) . "'>Activate</a></li>";
                 else
-                    $deactivate_link = "<li><a class='dropdown-item' href='" . route_to('Wagtail\Controllers\Back\Resources::deactivate', $branch->id) . "'>Deactivate</a></li>";
+                    $deactivate_link = "<li><a class='dropdown-item' href='" . base_url(route_to('Wagtail\Controllers\Back\Resources::deactivate', $branch->id)) . "'>Deactivate</a></li>";
                 
-                $delete_link = "<li><a class='dropdown-item link-danger modal-confirm-link' href='" . route_to('Wagtail\Controllers\Back\Resources::delete', $branch->id) . "' data-confirm-link-text='Are you sure you want to delete " . ($branch->template_unique ? "&quot;" . $branch->title . "&quot; page" : mb_strtolower($branch->template_title) . " &quot;" . $branch->title . "&quot;") . "?" . ($is_childs_exist ? PHP_EOL . 'All child resources will also be deleted!' : '') . "'>Delete</a></li>";
+                $delete_link = "<li><a class='dropdown-item link-danger modal-confirm-link' href='" . base_url(route_to('Wagtail\Controllers\Back\Resources::delete', $branch->id)) . "' data-confirm-link-text='Are you sure you want to delete " . ($branch->template_unique ? "&quot;" . $branch->title . "&quot; page" : mb_strtolower($branch->template_title) . " &quot;" . $branch->title . "&quot;") . "?" . ($is_childs_exist ? PHP_EOL . 'All child resources will also be deleted!' : '') . "'>Delete</a></li>";
     
                 $open_branch_class = $is_open_branch ? ' open' : '';
                 $open_tree_class = $is_open_branch ? ' show' : '';

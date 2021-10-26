@@ -37,7 +37,7 @@
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a class="link-secondary text-decoration-none" href="<?= route_to('Wagtail\Controllers\Back\Languages::edit', $language->id); ?>"><?= $language->title; ?></a>
+                                <a class="link-secondary text-decoration-none" href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::edit', $language->id)); ?>"><?= $language->title; ?></a>
                             </td>
                             <td><?= $language->code; ?></td>
                             <td>
@@ -51,17 +51,17 @@
                             <td>
                                 <div class="text-end">
                                     <?php if (empty($language->default)) : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::setDefault', $language->id); ?>">Set default</a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::setDefault', $language->id)); ?>">Set default</a>
                                     <?php endif ?>
                                     <?php if (empty($language->active)) : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::activate', $language->id); ?>"><i class="bi bi-toggle-off"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::activate', $language->id)); ?>"><i class="bi bi-toggle-off"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::deactivate', $language->id); ?>"><i class="bi bi-toggle-on"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::deactivate', $language->id)); ?>"><i class="bi bi-toggle-on"></i></a>
                                     <?php endif ?>
                                     <?php if (! empty($language->variables_count)) : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::delete', $language->id); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $language->variables_count; ?> variables with the language &quot;<?= $language->title; ?>&quot;. To delete a language uninstall this language from all variables assigned it."><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::delete', $language->id)); ?>" class="modal-alert-link" data-alert-link-text="There are <?= $language->variables_count; ?> variables with the language &quot;<?= $language->title; ?>&quot;. To delete a language uninstall this language from all variables assigned it."><i class="bi bi-trash link-danger"></i></a>
                                     <?php else : ?>
-                                        <a href="<?= route_to('Wagtail\Controllers\Back\Languages::delete', $language->id); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete language &quot;<?= $language->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
+                                        <a href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::delete', $language->id)); ?>" class="modal-confirm-link" data-confirm-link-text="Are you sure you want to delete language &quot;<?= $language->title; ?>&quot;?"><i class="bi bi-trash link-danger"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </td>
