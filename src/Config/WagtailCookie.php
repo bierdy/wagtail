@@ -51,7 +51,7 @@ class WagtailCookie extends BaseConfig
      *
      * @var string
      */
-    public $domain = '.hard-on-store.com';
+    public $domain = '';
 
     /**
      * --------------------------------------------------------------------------
