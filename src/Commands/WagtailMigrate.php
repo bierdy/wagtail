@@ -18,7 +18,7 @@ class WagtailMigrate extends BaseCommand
             $db = \Config\Database::connect($wagtail_app_config->DBGroup);
             $db->getVersion();
         } catch (\Throwable $e) {
-            CLI::write(CLI::color('Wagtail package installation error: ' . $e->getMessage(), 'red') . PHP_EOL);
+            CLI::write(CLI::color('Wagtail migration error: ' . $e->getMessage(), 'red') . PHP_EOL);
             exit;
         }
         
@@ -28,7 +28,7 @@ class WagtailMigrate extends BaseCommand
         try {
             $migrations->latest();
         } catch (\Throwable $e) {
-            CLI::write(CLI::color('Wagtail package installation error: ' . $e->getMessage(), 'red') . PHP_EOL);
+            CLI::write(CLI::color('Wagtail migration error: ' . $e->getMessage(), 'red') . PHP_EOL);
             exit;
         }
     }
