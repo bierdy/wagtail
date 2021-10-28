@@ -147,7 +147,10 @@ class Resource extends Wagtail
             if (isset($childs[$resource->id]))
                 $resource->childs = $childs[$resource->id];
         
-        return $childs[0] ?? [];
+        if (empty($childs))
+            return [];
+            
+        return $childs[0] ?? $childs[array_key_first($childs)];
     }
     
     public function getResourceTreeByUriSegments(array $uri_segments = []) : ? object
