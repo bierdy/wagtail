@@ -80,12 +80,15 @@ class Resource extends Wagtail
         $wagtailModel = model('Wagtail');
         $templateModel = model('Template');
         
+        $resource_table = $this->db->prefixTable($this->table);
+        $template_table = $templateModel->db->prefixTable($templateModel->table);
+        
         $query = "
-            WITH RECURSIVE cte_{$this->table} AS (
+            WITH RECURSIVE cte_{$resource_table} AS (
                 SELECT
                     r1.*
                 FROM
-                    {$this->table} AS r1
+                    {$resource_table} AS r1
                 WHERE
                     r1.parent_id = {$id}
                 UNION
@@ -93,22 +96,22 @@ class Resource extends Wagtail
                 SELECT
                     r2.*
                 FROM
-                    {$this->table} AS r2
+                    {$resource_table} AS r2
                 INNER JOIN
-                    cte_{$this->table}
+                    cte_{$resource_table}
                 ON
-                    r2.parent_id = cte_{$this->table}.id
+                    r2.parent_id = cte_{$resource_table}.id
             )
             SELECT
-                cte_{$this->table}.*, t.title AS template_title, t.icon AS template_icon, t.unique AS template_unique
+                cte_{$resource_table}.*, t.title AS template_title, t.icon AS template_icon, t.unique AS template_unique
             FROM
-                cte_{$this->table}
+                cte_{$resource_table}
             LEFT JOIN
-                {$templateModel->table} AS t
+                {$template_table} AS t
             ON
-                t.id = cte_{$this->table}.template_id
+                t.id = cte_{$resource_table}.template_id
             ORDER BY
-                cte_{$this->table}.order;
+                cte_{$resource_table}.order;
         ";
         
         return $wagtailModel->db->query($query)->getResult();
