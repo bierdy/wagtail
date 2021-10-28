@@ -19,4 +19,11 @@ class Assets extends Controller
         $this->response->setBody(view("Wagtail\\Views\\back\\assets\\js\\{$file_name}.js"));
         $this->response->send();
     }
+    
+    public function png(string $file_name = '')
+    {
+        $this->response->setContentType('image/png');
+        $this->response->setBody(view("Wagtail\\Views\\back\\assets\\img\\{$file_name}.png"));
+        $this->response->send();
+    }
 }

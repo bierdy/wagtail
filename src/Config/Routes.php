@@ -58,4 +58,5 @@ $routes->group($wagtail_app_config->backRootPath, ['namespace' => 'Wagtail\Contr
     
     $routes->get('assets/css/(:segment)', 'Assets::css/$1');
     $routes->get('assets/js/(:segment)', 'Assets::js/$1');
+    $routes->get('assets/img/(:segment)', 'Assets::png/$1');
 });

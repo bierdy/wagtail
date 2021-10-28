@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
         <meta name="format-detection" content="telephone=no">
         <title><?= $title; ?></title>
+        <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::png', 'favicon')); ?>" rel="shortcut icon" type="image/png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
         <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::css', 'styles')); ?>" rel="stylesheet" type="text/css">
