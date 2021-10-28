@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
         <meta name="format-detection" content="telephone=no">
         <title><?= $title; ?></title>
-        <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::png', 'favicon')); ?>" rel="shortcut icon" type="image/png">
+        <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::get')); ?>?path=Wagtail\\Views\\back\\assets\\img\\&name=favicon&ext=png" rel="shortcut icon" type="image/png">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
-        <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::css', 'styles')); ?>" rel="stylesheet" type="text/css">
+        <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::get')); ?>?path=Wagtail\\Views\\back\\assets\\css\\&name=styles&ext=css" rel="stylesheet" type="text/css">
         <script>
             window.wagtail_cookie_config = <?= $wagtail_cookie_config; ?>;
         </script>
@@ -34,6 +34,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
-        <script src="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::js', 'app')); ?>"></script>
+        <script src="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::get')); ?>?path=Wagtail\\Views\\back\\assets\\js\\&name=app&ext=js"></script>
     </body>
 </html>
