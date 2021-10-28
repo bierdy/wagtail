@@ -47,7 +47,6 @@ class BaseController extends Controller
     protected $languageModel = null;
     protected $variableModel = null;
     protected $variableValueModel = null;
-    protected $affiliateService = null;
     
     /**
      * Constructor.
@@ -69,7 +68,6 @@ class BaseController extends Controller
         $this->languageModel = model('Language');
         $this->variableModel = model('Variable');
         $this->variableValueModel = model('VariableValue');
-        $this->affiliateService = service('Affiliate');
         
         $wagtail_cookie_config = [
             'prefix' => $this->wagtail_cookie_config->prefix,
