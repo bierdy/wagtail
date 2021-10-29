@@ -39,6 +39,8 @@ class BaseController extends Controller
     
     protected $default_data = [];
     
+    protected $app_config = null;
+    protected $wagtail_app_config = null;
     protected $wagtail_cookie_config = null;
     protected $wagtailModel = null;
     protected $resourceModel = null;
@@ -60,6 +62,8 @@ class BaseController extends Controller
         
         // E.g.: $this->session = \Config\Services::session();
         
+        $this->app_config = config('App');
+        $this->wagtail_app_config = config('WagtailApp');
         $this->wagtail_cookie_config = config('WagtailCookie');
         $this->wagtailModel = model('Wagtail');
         $this->resourceModel = model('Resource');
@@ -68,6 +72,12 @@ class BaseController extends Controller
         $this->languageModel = model('Language');
         $this->variableModel = model('Variable');
         $this->variableValueModel = model('VariableValue');
+        
+        $app_config = [
+            'baseURL' => $this->app_config->baseURL,
+        ];
+        
+        $wagtail_app_config = $this->wagtail_app_config;
         
         $wagtail_cookie_config = [
             'prefix' => $this->wagtail_cookie_config->prefix,
@@ -82,6 +92,8 @@ class BaseController extends Controller
             [
                 'title' => '',
                 'resources_tree' => $this->resourceModel->getResourcesTree(),
+                'app_config' => json_encode($app_config),
+                'wagtail_app_config' => json_encode($wagtail_app_config),
                 'wagtail_cookie_config' => json_encode($wagtail_cookie_config),
             ];
     }

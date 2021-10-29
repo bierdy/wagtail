@@ -13,7 +13,13 @@ class App
     };
     
     config = {
-        'cookie': {},
+        'app': {
+            'app': {},
+        },
+        'wagtail': {
+            'app': {},
+            'cookie': {},
+        },
     };
     
     constructor(modules)
@@ -35,14 +41,14 @@ class App
     {
         $(app.elements.modal_alert_link).on('click', function() {
             alert($(this).data('alertLinkText'));
-        
+            
             return false;
         });
         
         $(app.elements.modal_confirm_link).on('click', function() {
             let response = confirm($(this).data('confirmLinkText')),
                 dropdown_menu = $(this).closest('.dropdown-menu');
-    
+            
             if (dropdown_menu.length)
                 dropdown_menu.click();
             
@@ -110,13 +116,13 @@ class App
         
         if (! resources_tree.length)
             return;
-    
+        
         let branches = resources_tree.find('.branch');
-    
+        
         if (! branches.length)
             return;
-    
-        let cookies_resources_tree = Cookies.get(app.config.cookie.prefix + 'resources_tree');
+        
+        let cookies_resources_tree = Cookies.get(app.config.wagtail.cookie.prefix + 'resources_tree');
         
         cookies_resources_tree = cookies_resources_tree ? JSON.parse(cookies_resources_tree) : {'open_branches': []};
         
@@ -126,14 +132,14 @@ class App
             
             cookies_resources_tree.open_branches.push(branch_id);
             Cookies.set(
-                app.config.cookie.prefix + 'resources_tree',
+                app.config.wagtail.cookie.prefix + 'resources_tree',
                 JSON.stringify(cookies_resources_tree),
                 {
-                    domain: app.config.cookie.domain,
+                    domain: app.config.wagtail.cookie.domain,
                     expires: 365,
-                    path: app.config.cookie.path,
-                    secure: app.config.cookie.secure,
-                    sameSite: app.config.cookie.samesite,
+                    path: app.config.wagtail.cookie.path,
+                    secure: app.config.wagtail.cookie.secure,
+                    sameSite: app.config.wagtail.cookie.samesite,
                 });
         }
         
@@ -143,17 +149,17 @@ class App
             
             if (cookies_resources_tree.open_branches.indexOf(branch_id) === -1)
                 return;
-                
+            
             cookies_resources_tree.open_branches.splice(cookies_resources_tree.open_branches.indexOf(branch_id), 1);
             Cookies.set(
-                app.config.cookie.prefix + 'resources_tree',
+                app.config.wagtail.cookie.prefix + 'resources_tree',
                 JSON.stringify(cookies_resources_tree),
                 {
-                    domain: app.config.cookie.domain,
+                    domain: app.config.wagtail.cookie.domain,
                     expires: 365,
-                    path: app.config.cookie.path,
-                    secure: app.config.cookie.secure,
-                    sameSite: app.config.cookie.samesite,
+                    path: app.config.wagtail.cookie.path,
+                    secure: app.config.wagtail.cookie.secure,
+                    sameSite: app.config.wagtail.cookie.samesite,
                 });
         }
         
@@ -169,31 +175,31 @@ class App
                 branch.addClass('open');
                 addBranchIdToCookie(branch.data('branchId'));
             });
-    
+            
             tree.on('hide.bs.collapse', function(e)
             {
                 if (! $(this).is(e.target))
                     return;
-    
+                
                 branch.removeClass('open');
                 removeBranchIdFromCookie(branch.data('branchId'));
-    
+                
                 let child_branches = $(this).find('.branch');
-    
+                
                 if (child_branches.length)
                     child_branches.each(function(index, value) {
                         removeBranchIdFromCookie($(value).data('branchId'));
                     });
             });
-    
+            
             tree.on('hidden.bs.collapse', function(e)
             {
                 if (! $(this).is(e.target))
                     return;
-    
+                
                 let child_branches = $(this).find('.branch'),
                     child_trees = $(this).find('.tree');
-    
+                
                 child_branches.removeClass('open');
                 child_trees.removeClass('show');
             });
@@ -208,14 +214,14 @@ class App
         
         
         let resources_tree_ = document.querySelector(app.elements.resources_tree);
-    
+        
         resources_tree_.addEventListener('dragstart', (e) => {
             if (! e.target)
                 return;
             
             e.target.classList.add('selected');
         })
-    
+        
         resources_tree_.addEventListener('dragend', (e) => {
             if (! e.target)
                 return;
@@ -227,10 +233,10 @@ class App
                 element.classList.remove('is-insertable-after');
             });
         });
-    
+        
         resources_tree_.addEventListener('dragover', (e) => {
             e.preventDefault();
-    
+            
             let selected_element = resources_tree_.querySelector('.selected');
             let selected_branch = selected_element.closest('.branch');
             let current_element = e.target;
@@ -239,7 +245,7 @@ class App
             
             if (! is_movable)
                 return;
-    
+            
             let current_element_y_hover_position = getCurrentElementYHoverPosition(e.clientY, current_element);
             
             if (selected_branch.contains(current_element))
@@ -264,20 +270,20 @@ class App
                 current_branch.classList.add('is-insertable-after');
             }
         });
-    
+        
         resources_tree_.addEventListener('dragleave', (e) => {
             if (! e.target)
                 return;
-    
+            
             e.target.closest('.branch').classList.remove('is-insertable-before');
             e.target.closest('.branch').classList.remove('is-insertable-inside');
             e.target.closest('.branch').classList.remove('is-insertable-after');
         });
-    
+        
         resources_tree_.addEventListener('drop', (e) => {
             if (! e.target)
                 return;
-    
+            
             let selected_element = resources_tree_.querySelector('.selected');
             let selected_branch = selected_element.closest('.branch');
             let selected_branch_tree = selected_branch.closest('.tree');
@@ -288,12 +294,12 @@ class App
             if (current_branch.classList.contains('is-insertable-inside'))
             {
                 current_branch_tree = current_branch.querySelector('.tree');
-    
+                
                 current_branch_tree.append(selected_branch);
                 current_branch.classList.add('childs-exist');
-    
+                
                 handleSelectedBranchTree(selected_branch_tree);
-    
+                
                 setBranchParent(selected_branch.dataset.branchId, current_branch.dataset.branchId);
                 setBranchOrder(selected_branch.dataset.branchId, current_branch_tree.children.length - 1);
             }
@@ -322,10 +328,10 @@ class App
                             current_branch_tree.append(selected_branch);
                     }
                 }
-    
+                
                 if (current_branch_tree === null)
                     return;
-    
+                
                 handleSelectedBranchTree(selected_branch_tree);
                 
                 if (selected_branch_tree !== current_branch_tree)
@@ -334,18 +340,18 @@ class App
                         setBranchParent(selected_branch.dataset.branchId, current_branch_tree.closest('.branch').dataset.branchId);
                     else
                         setBranchParent(selected_branch.dataset.branchId, 0);
-        
+                    
                     [].slice.call(current_branch_tree.children).forEach((element, index) => {
                         setBranchOrder(element.dataset.branchId, index);
                     });
                 }
             }
-    
+            
             current_branch.classList.remove('is-insertable-before');
             current_branch.classList.remove('is-insertable-inside');
             current_branch.classList.remove('is-insertable-after');
         });
-    
+        
         const getCurrentElementYHoverPosition = (y_cursor_position, current_element) => {
             let current_element_bounding_client_rect = current_element.getBoundingClientRect();
             let current_element_y_position = current_element_bounding_client_rect.y;
@@ -361,10 +367,15 @@ class App
                     return 'center';
             }
         };
-    
+        
         const setBranchParent = (branch_id, branch_parent_id) => {
+            let base_url = app.trimSlashes(app.config.app.app.baseURL),
+                back_root_path = app.trimSlashes(app.config.wagtail.app.backRootPath);
+            
+            back_root_path = back_root_path.length ? '/' + back_root_path : '';
+            
             $.ajax({
-                url: '/resources/set-parent/' + branch_id + '/' + branch_parent_id,
+                url: base_url + back_root_path + '/resources/set-parent/' + branch_id + '/' + branch_parent_id,
                 method: 'get',
                 dataType: 'json',
                 success: (data) => {
@@ -374,8 +385,13 @@ class App
         }
         
         const setBranchOrder = (branch_id, order) => {
+            let base_url = app.trimSlashes(app.config.app.app.baseURL),
+                back_root_path = app.trimSlashes(app.config.wagtail.app.backRootPath);
+            
+            back_root_path = back_root_path.length ? '/' + back_root_path : '';
+            
             $.ajax({
-                url: '/resources/set-order/' + branch_id + '/' + order,
+                url: base_url + back_root_path + '/resources/set-order/' + branch_id + '/' + order,
                 method: 'get',
                 dataType: 'json',
                 success: (data) => {
@@ -383,7 +399,7 @@ class App
                 }
             });
         }
-    
+        
         const handleSelectedBranchTree = (selected_branch_tree) => {
             if (selected_branch_tree.children.length === 0)
             {
@@ -400,9 +416,21 @@ class App
         }
     }
     
-    initConfig() {
+    initConfig()
+    {
+        if (window.app_config)
+            app.config.app.app = window.app_config;
+        
+        if (window.wagtail_app_config)
+            app.config.wagtail.app = window.wagtail_app_config;
+        
         if (window.wagtail_cookie_config)
-            app.config.cookie = window.wagtail_cookie_config;
+            app.config.wagtail.cookie = window.wagtail_cookie_config;
+    }
+    
+    trimSlashes(string)
+    {
+        return string.replace(/^\/|\/$/g, '');
     }
 }
 

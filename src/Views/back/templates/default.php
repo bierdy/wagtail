@@ -11,6 +11,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css">
         <link href="<?= base_url(route_to('Wagtail\Controllers\Back\Assets::get')); ?>?path=Wagtail\\Views\\back\\assets\\css\\&name=styles&ext=css" rel="stylesheet" type="text/css">
         <script>
+            window.app_config = <?= $app_config; ?>;
+            window.wagtail_app_config = <?= $wagtail_app_config; ?>;
             window.wagtail_cookie_config = <?= $wagtail_cookie_config; ?>;
         </script>
     </head>
