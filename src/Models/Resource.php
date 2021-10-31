@@ -242,8 +242,8 @@ class Resource extends Wagtail
         $resource_neighbors = $this->where('parent_id', $resource->parent_id)->where('id !=', $id)->findAll();
         $resource_neighbors_urls = array_column($resource_neighbors, 'url');
         $wagtail_app_config = config('WagtailApp');
-    
-        $resource_url = ! empty($resource->url) ? $resource->url : mb_url_title($resource->title, $wagtail_app_config->resourceUrlSeparator, true);
+        
+        $resource_url = mb_url_title(! empty($resource->url) ? $resource->url : $resource->title, $wagtail_app_config->resourceUrlSeparator, true);
         
         while(in_array($resource_url, $resource_neighbors_urls))
             $resource_url .= $wagtail_app_config->resourceUrlSeparator . $wagtail_app_config->resourceUrlCopyPostfix;
