@@ -22,14 +22,5 @@ use Config\Services;
  *      Events::on('create', [$myInstance, 'myMethod']);
  */
 
-Events::on('pre_system', static function ()
-{
-    $config_validation_rule_sets = config('Validation')->ruleSets;
-    
-    $validation_class_rules_class = \Wagtail\Validation\Rules\ClassRules::class;
-    
-    if (! in_array($validation_class_rules_class, $config_validation_rule_sets))
-        config('Validation')->ruleSets[] = $validation_class_rules_class;
-}, 0);
-
+Events::on('pre_system', [service('Wagtail'), 'setValidationRules'], 0);
 Events::on('pre_system', [service('Wagtail'), 'setResourceRoute'], 1);

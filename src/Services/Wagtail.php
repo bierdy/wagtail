@@ -49,4 +49,14 @@ class Wagtail extends BaseService
     {
         $this->resource = $resource;
     }
+    
+    public function setValidationRules()
+    {
+        $config_validation_rule_sets = config('Validation')->ruleSets;
+    
+        $validation_class_rules_class = \Wagtail\Validation\Rules\ClassRules::class;
+    
+        if (! in_array($validation_class_rules_class, $config_validation_rule_sets))
+            config('Validation')->ruleSets[] = $validation_class_rules_class;
+    }
 }
