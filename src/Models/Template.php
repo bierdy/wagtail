@@ -22,6 +22,7 @@ class Template extends Wagtail
     
     protected $validationRules = [
         'title' => 'required|is_unique[templates.title,id,{id}]',
+        'class_method' => 'permit_empty|is_class_exist|is_method_exist',
     ];
     protected $validationMessages = [];
     protected $skipValidation = false;
