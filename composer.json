@@ -10,7 +10,13 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.3 || ^8.0"
+        "php": "^7.3 || ^8.0",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-intl": "*",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "ext-imagick": "*"
     },
     "autoload": {
         "psr-4": {
