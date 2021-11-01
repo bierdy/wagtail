@@ -4,6 +4,7 @@
     <?php if (! empty($variable->value)) { ?>
         <?php
         $image_path = '/' . trim(str_replace('{resource_id}', $resource->id, $options->path), '/') . '/';
+        $image_path = site_url($image_path);
         $image_src = $image_path . $variable->value->value;
         $delete_link = base_url(route_to('Wagtail\Controllers\Back\Variables::deleteValue', $variable->value->id));
         $image_height = $options->admin_image_height;

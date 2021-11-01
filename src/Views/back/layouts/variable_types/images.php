@@ -4,6 +4,7 @@
     <?php $images = ! empty($variable->values) ? $variable->values : (! empty($variable->value) ? [$variable->value] : []); ?>
     <?php if (! empty($images)) { ?>
         <?php $image_path = '/' . trim(str_replace('{resource_id}', $resource->id, $options->path), '/') . '/'; ?>
+        <?php $image_path = site_url($image_path); ?>
         <?php $image_height = $options->admin_image_height; ?>
         <div class="input-images">
             <?php foreach ($images as $image) { ?>
