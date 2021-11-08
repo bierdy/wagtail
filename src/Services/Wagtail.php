@@ -35,6 +35,10 @@ class Wagtail extends BaseService
         // The current resource not found
         if (is_null($resource))
             return;
+    
+        // The current resource template Class::method is empty
+        if (empty($resource->template_class_method))
+            return;
         
         $this->setResource($resource);
         $routes->add($uri_string, $resource->template_class_method, ['hostname' => $wagtail_app_config->frontDomain]);
