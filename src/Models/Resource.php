@@ -136,6 +136,140 @@ class Resource extends Wagtail
         }, $resources);
     }
     
+    public function getResourceTreeByUriSegments(array $uri_segments = []) : ? object
+    {
+        if (empty($uri_segments))
+            return null;
+    
+        $tree = null;
+        $last_uri_segment = $uri_segments[array_key_last($uri_segments)];
+        $uri_segments_reverse = array_reverse($uri_segments);
+        $uri_segments_reverse_json = json_encode($uri_segments_reverse);
+        
+        $templateModel = model('Template');
+        $templateVariableModel = model('TemplateVariable');
+        $variableModel = model('Variable');
+        $variableValueModel = model('VariableValue');
+    
+        $resource_table = $this->db->prefixTable($this->table);
+        $template_table = $this->db->prefixTable($templateModel->table);
+        $template_variable_table = $this->db->prefixTable($templateVariableModel->table);
+        $variable_table = $this->db->prefixTable($variableModel->table);
+        $variable_value_table = $this->db->prefixTable($variableValueModel->table);
+    
+        $query = "
+            WITH RECURSIVE
+                cte_resources AS (
+                    SELECT
+                        1 AS level,
+                        childs.*
+                    FROM
+                        {$resource_table} AS childs
+                    WHERE
+                        childs.url = '{$last_uri_segment}'
+                    UNION ALL
+                    SELECT
+                        level + 1,
+                        parents.*
+                    FROM
+                        cte_resources AS childs
+                    INNER JOIN
+                        {$resource_table} AS parents
+                    ON
+                        parents.id = childs.parent_id
+                    WHERE
+                        parents.url = JSON_UNQUOTE(JSON_EXTRACT('{$uri_segments_reverse_json}', CONCAT('$[', level, ']')))
+                )
+            SELECT
+                resources.*
+            FROM
+                cte_resources AS resources
+            ORDER BY
+                level DESC
+        ";
+        
+        $resources = $this->db->query($query)->getResult();
+    
+        if (empty($resources))
+            return null;
+    
+        // Remove unnecessary resources
+        $parent_id = $resources[array_key_first($resources)]->id;
+        $resources = array_filter($resources, function($resource, $index) use (&$parent_id) {
+            if ($index === 0)
+                return true;
+            
+            if ($resource->parent_id !== $parent_id)
+                return false;
+            
+            $parent_id = $resource->id;
+            return true;
+        }, ARRAY_FILTER_USE_BOTH);
+        // /Remove unnecessary resources
+        
+        if (count($resources) !== count($uri_segments))
+            return null;
+    
+        $resources = array_values($resources);
+    
+        $resources_ids = array_column($resources, 'id');
+    
+        $resources_template_ids = array_column($resources, 'template_id');
+        $resources_template_ids = array_unique($resources_template_ids, SORT_NUMERIC);
+        
+        // Get templates
+        $templates = $templateModel
+            ->select("{$template_table}.id, {$template_table}.title, {$template_table}.class_method, GROUP_CONCAT(DISTINCT tv.id) AS variables")
+            ->join("{$template_variable_table} AS tv", "tv.template_id = {$template_table}.id", 'left')
+            ->whereIn("{$template_table}.id", $resources_template_ids)
+            ->groupBy("{$template_table}.id")
+            ->find();
+    
+        $templates = array_combine(array_column($templates, 'id'), $templates);
+        // /Get templates
+    
+        // Get variable values
+        $variable_values = $variableValueModel
+            ->select("{$variable_value_table}.resource_id, {$variable_value_table}.variable_id, {$variable_value_table}.value, {$variable_value_table}.order, v.name AS variable_name, v.options AS variable_options")
+            ->join("{$variable_table} AS v", "v.id = {$variable_value_table}.variable_id", 'left')
+            ->whereIn("{$variable_value_table}.resource_id", $resources_ids)
+            ->orderBy("{$variable_value_table}.order")
+            ->find();
+        // /Get variable values
+        
+        // Build tree
+        $resource_ = null;
+        foreach($resources as $key => $resource)
+        {
+            $resource->template_title = $templates[$resource->template_id]->title;
+            $resource->template_class_method = $templates[$resource->template_id]->class_method;
+    
+            $template_variables = explode(',', $templates[$resource->template_id]->variables);
+            $resource->variables = [];
+            foreach($variable_values as &$variable_value)
+                if (isset($variable_value->resource_id) && $variable_value->resource_id === $resource->id && in_array($variable_value->variable_id, $template_variables))
+                {
+                    unset($variable_value->resource_id);
+                    $resource->variables[] = $variable_value;
+                }
+            
+            if ($key === array_key_first($resources))
+            {
+                $resource_ = $resource;
+                $resource_->parent = null;
+                $tree = $resource_;
+                continue;
+            }
+    
+            $tree = $resource;
+            $tree->parent = $resource_;
+            $resource_ = $resource;
+        }
+        // /Build tree
+        
+        return $tree;
+    }
+    
     protected function buildTree(array $resources = []) : array
     {
         $childs = [];
@@ -149,91 +283,8 @@ class Resource extends Wagtail
         
         if (empty($childs))
             return [];
-            
+        
         return $childs[0] ?? $childs[array_key_first($childs)];
-    }
-    
-    public function getResourceTreeByUriSegments(array $uri_segments = []) : ? object
-    {
-        if (empty($uri_segments))
-            return null;
-        
-        $templateModel = model('Template');
-        $variableModel = model('Variable');
-        $variableValueModel = model('VariableValue');
-        $uri_segments_resources = [];
-        $parent_id = null;
-        $resource = null;
-        
-        foreach($uri_segments as $uri_segment)
-        {
-            $uri_segment_resource = $this
-                ->select("{$this->table}.*, t.title AS template_title, t.class_method AS template_class_method")
-                ->where("{$this->table}.url", $uri_segment)
-                ->where("{$this->table}.parent_id", $parent_id ?? 0)
-                ->join("{$templateModel->table} AS t", "t.id = {$this->table}.template_id", 'left')
-                ->findAll();
-            
-            if (count($uri_segment_resource) !== 1)
-                return null;
-            
-            $uri_segment_resource = $uri_segment_resource[0];
-            
-            $uri_segment_resource->variables = $variableModel
-                ->select('variables.*, template_variables.order')
-                ->where('template_variables.template_id', $uri_segment_resource->template_id)
-                ->join('template_variables', 'template_variables.variable_id = variables.id', 'left')
-                ->orderBy('template_variables.order', 'ASC')
-                ->findAll();
-            
-            foreach($uri_segment_resource->variables as &$resource_variable)
-            {
-                $resource_variable->values = $variableValueModel
-                    ->select('variable_values.*')
-                    ->where('variable_values.resource_id', $uri_segment_resource->id)
-                    ->where('variable_values.variable_id', $resource_variable->id)
-                    ->orderBy('variable_values.order', 'ASC')
-                    ->findAll();
-            }
-            
-            $uri_segments_resources[] = $uri_segment_resource;
-            $parent_id = $uri_segment_resource->id;
-        }
-        
-        $uri_segment_resource_ = null;
-        foreach($uri_segments_resources as $key => $uri_segment_resource)
-        {
-            if ($key === array_key_first($uri_segments_resources))
-            {
-                $uri_segment_resource_ = $uri_segment_resource;
-                $uri_segment_resource_->parent = null;
-                $resource = $uri_segment_resource_;
-                continue;
-            }
-    
-            $resource = $uri_segment_resource;
-            $resource->parent = $uri_segment_resource_;
-            $uri_segment_resource_ = $uri_segment_resource;
-        }
-        
-        unset($uri_segments);
-        unset($uri_segment);
-        unset($uri_segments_resources);
-        unset($uri_segment_resource);
-        unset($uri_segment_resource_);
-        unset($parent_id);
-        
-        return $resource;
-    }
-    
-    public function getResourceBranchSegments(object $resource_branch, array $resource_branch_segments = []) : array
-    {
-        $resource_branch_segments[] = $resource_branch->url;
-        
-        if (! empty($resource_branch->parent))
-            $resource_branch_segments = $this->getResourceBranchSegments($resource_branch->parent, $resource_branch_segments);
-        
-        return $resource_branch_segments;
     }
     
     public function updateUrl(int $id = 0)
