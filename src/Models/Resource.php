@@ -219,7 +219,7 @@ class Resource extends Wagtail
         
         // Get templates
         $templates = $templateModel
-            ->select("{$template_table}.id, {$template_table}.title, {$template_table}.class_method, GROUP_CONCAT(DISTINCT tv.id) AS variables")
+            ->select("{$template_table}.id, {$template_table}.title, {$template_table}.class_method, GROUP_CONCAT(DISTINCT tv.variable_id) AS variables")
             ->join("{$template_variable_table} AS tv", "tv.template_id = {$template_table}.id", 'left')
             ->whereIn("{$template_table}.id", $resources_template_ids)
             ->groupBy("{$template_table}.id")
