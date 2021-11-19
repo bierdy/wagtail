@@ -19,4 +19,6 @@ class WagtailApp extends BaseConfig
     public $resourceUrlSeparator = '-';
     
     public $resourceUrlCopyPostfix = 'copy';
+    
+    public $resourceUrlEmpty = 'empty';
 }
