@@ -80,7 +80,7 @@ if (! function_exists('buildResourcesTree'))
                 $tree .= "<li class='branch{$open_branch_class}{$active_branch_class}{$childs_exist_class}{$deactivated_branch_class}' data-branch-id='{$branch->id}'>";
                     $tree .= "<div class='content'>";
                         $tree .= "<div class='main'>";
-                            $tree .= "<i class='arrow bi bi-chevron-right link-secondary' data-bs-toggle='collapse' data-bs-target='[data-tree-id=\"{$branch->id}\"]'></i>";
+                            $tree .= "<i class='arrow bi bi-chevron-right link-secondary' data-bs-target='[data-tree-id=\"{$branch->id}\"]'></i>";
                             $tree .= $edit_link;
                         $tree .= "</div>";
                         $tree .= "<div class='menu'>";
@@ -96,7 +96,7 @@ if (! function_exists('buildResourcesTree'))
                         $tree .= "</div>";
                     $tree .= "</div>";
     
-                    $tree .= "<ul class='tree collapse{$open_tree_class}' data-tree-id='{$branch->id}' data-tree-level='{$tree_level}'>";
+                    $tree .= "<ul class='tree{$open_tree_class}' data-tree-id='{$branch->id}' data-tree-level='{$tree_level}'>";
                         $tree .= buildResourcesTree($childs, $tree_level);
                     $tree .= "</ul>";
                     

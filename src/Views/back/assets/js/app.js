@@ -162,46 +162,51 @@ class App
                     sameSite: app.config.wagtail.cookie.samesite,
                 });
         }
-        
+    
         branches.each(function(index, value) {
             let branch = $(value),
-                tree = branch.find('.tree:first');
+                branch_arrow = branch.find('> .content > .main > .arrow'),
+                tree = branch.find('.tree:first'),
+                toggling = false;
             
-            tree.on('show.bs.collapse', function(e)
-            {
-                if (! $(this).is(e.target))
-                    return;
-                
-                branch.addClass('open');
-                addBranchIdToCookie(branch.data('branchId'));
-            });
-            
-            tree.on('hide.bs.collapse', function(e)
-            {
-                if (! $(this).is(e.target))
-                    return;
-                
-                branch.removeClass('open');
-                removeBranchIdFromCookie(branch.data('branchId'));
-                
-                let child_branches = $(this).find('.branch');
-                
-                if (child_branches.length)
-                    child_branches.each(function(index, value) {
-                        removeBranchIdFromCookie($(value).data('branchId'));
-                    });
-            });
-            
-            tree.on('hidden.bs.collapse', function(e)
-            {
-                if (! $(this).is(e.target))
-                    return;
-                
-                let child_branches = $(this).find('.branch'),
-                    child_trees = $(this).find('.tree');
-                
-                child_branches.removeClass('open');
-                child_trees.removeClass('show');
+            branch_arrow.on('click', function() {
+                if (toggling)
+                    return false;
+    
+                tree.toggle({
+                    duration: 300,
+                    start: () => {
+                        toggling = true;
+                        
+                        if (! branch.hasClass('open'))
+                        {
+                            branch.addClass('open');
+                            addBranchIdToCookie(branch.data('branchId'));
+                        }
+                        else
+                        {
+                            branch.removeClass('open');
+                            removeBranchIdFromCookie(branch.data('branchId'));
+    
+                            let child_branches = tree.find('.branch');
+    
+                            if (child_branches.length)
+                                child_branches.each(function(index, value) {
+                                    removeBranchIdFromCookie($(value).data('branchId'));
+                                });
+                        }
+                    },
+                    complete: () => {
+                        toggling = false;
+    
+                        let child_branches = tree.find('.branch'),
+                            child_trees = tree.find('.tree');
+    
+                        child_branches.removeClass('open');
+                        child_trees.removeClass('show');
+                        child_trees.css('display', '');
+                    },
+                });
             });
         });
         

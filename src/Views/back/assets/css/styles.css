@@ -2,8 +2,14 @@
 
 }
 .resources-tree .tree {
-    padding: 0 0 0 27px;
+    display: none;
+    width: 100% !important;
+    padding: 0 0 0 27px !important;
+    opacity: 1 !important;
     list-style-type: none;
+}
+.resources-tree .tree.show {
+    display: block;
 }
 .resources-tree > .tree {
     padding: 0 0 0 0;
@@ -23,7 +29,7 @@
     top: 3px;
     left: 0;
     cursor: pointer;
-    transition: transform 0.35s ease 0s;
+    transition: transform 0.3s ease 0s;
     visibility: hidden;
 }
 .resources-tree .tree .branch.childs-exist > .content > .main > .arrow {
