@@ -20,9 +20,13 @@ class Image extends Variable implements VariableInterface
     
         if (! empty($this->variable->value->value))
         {
-            if (file_exists($image_path . $this->variable->value->value))
-                unlink($image_path . $this->variable->value->value);
-    
+            $old_image_path_info = pathinfo($this->variable->value->value);
+            $old_image_name = $old_image_path_info['filename'];
+            $old_files = get_filenames($image_path);
+            foreach($old_files as $old_file)
+                if (strpos($old_file, $old_image_name) !== false)
+                    unlink($image_path . $old_file);
+            
             $this->variableValueModel->update($this->variable->value->id, ['value' => $image_name]);
         }
         else
