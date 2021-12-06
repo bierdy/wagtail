@@ -29,19 +29,26 @@ class Wagtail extends BaseService
         // If front root path of wagtail app config is not match first uri segment stop work
         if (empty($uri_segments))
             return;
-    
+        
         $resource = $resourceModel->getResourceTreeByUriSegments($uri_segments);
-        
-        // The current resource not found
-        if (is_null($resource))
-            return;
     
-        // The current resource template Class::method is empty
-        if (empty($resource->template_class_method))
+        if (! is_null($resource) && ! empty($resource->template_class_method))
+        {
+            $this->setResource($resource);
+            $routes->add($uri_string, $resource->template_class_method, ['hostname' => $wagtail_app_config->frontDomain]);
+            
             return;
+        }
         
-        $this->setResource($resource);
-        $routes->add($uri_string, $resource->template_class_method, ['hostname' => $wagtail_app_config->frontDomain]);
+        $resource_404 = $resourceModel->getReverseResourceTree((int) $wagtail_app_config->resource404Id);
+        
+        if (! is_null($resource_404) && ! empty($resource_404->template_class_method))
+        {
+            $this->setResource($resource_404);
+            $routes->set404Override($resource_404->template_class_method);
+            
+            return;
+        }
     }
     
     public function getResource() : ? object

@@ -60,6 +60,47 @@ class Resource extends Wagtail
         return $this->buildTree($resources);
     }
     
+    public function getReverseResourceTree(int $id) : ? object
+    {
+        $resource_table = $this->db->prefixTable($this->table);
+        
+        $query = "
+            WITH RECURSIVE
+                cte_resources AS (
+                    SELECT
+                        1 AS level,
+                        childs.*
+                    FROM
+                        {$resource_table} AS childs
+                    WHERE
+                        childs.id = '{$id}'
+                    UNION ALL
+                    SELECT
+                        level + 1,
+                        parents.*
+                    FROM
+                        cte_resources AS childs
+                    INNER JOIN
+                        {$resource_table} AS parents
+                    ON
+                        parents.id = childs.parent_id
+                )
+            SELECT
+                resources.*
+            FROM
+                cte_resources AS resources
+            ORDER BY
+                level DESC
+        ";
+        
+        if (empty($resources = $this->db->query($query)->getResult()))
+            return null;
+    
+        $resources_uri_segments = array_column($resources, 'url');
+    
+        return $this->getResourceTreeByUriSegments($resources_uri_segments);
+    }
+    
     protected function getResources() : array
     {
         $templateModel = model('Template');

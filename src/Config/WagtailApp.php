@@ -21,4 +21,6 @@ class WagtailApp extends BaseConfig
     public $resourceUrlCopyPostfix = 'copy';
     
     public $resourceUrlEmpty = 'empty';
+    
+    public $resource404Id = 0;
 }
