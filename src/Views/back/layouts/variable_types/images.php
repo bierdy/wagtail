@@ -17,7 +17,7 @@
                     <a class="delete-link link-danger modal-confirm-link" href="<?= $delete_link; ?>" data-confirm-link-text="Are you sure you want to delete image?">
                         <i class='bi bi-x-circle'></i>
                     </a>
-                    <?= form_input($variable->name . '_orders' . "[{$image->id}]", $post[$variable->name . '_orders'][$image->id] ?? $image->order ?? 1000, ['class' => 'form-control order' , 'id' => $variable->name]); ?>
+                    <?= form_input($variable->name . '_orders' . "[{$image->id}]", $post[$variable->name . '_orders'][$image->id] ?? $image->order ?? 1000, ['class' => 'form-control order', 'id' => $variable->name]); ?>
                 </div>
             <?php } ?>
         </div>
