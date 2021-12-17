@@ -55,15 +55,15 @@ class Image extends Variable implements VariableInterface
         
         foreach($thumbs as $thumb)
         {
+            $thumb_image = $image_path_info['dirname'] . '/' . $image_path_info['filename'] . $thumb->postfix . '.' . $image_path_info['extension'];
+            
+            if (! file_exists($thumb_image))
+                copy($image, $thumb_image);
+            
+            $imagick = new \Imagick($thumb_image);
+            
             foreach($thumb->methods as $method)
             {
-                $thumb_image = $image_path_info['dirname'] . '/' . $image_path_info['filename'] . $thumb->postfix . '.' . $image_path_info['extension'];
-                
-                if (! file_exists($thumb_image))
-                    copy($image, $thumb_image);
-                
-                $imagick = new \Imagick($thumb_image);
-    
                 $imagick->{$method->name}(...$method->options);
                 
                 if ($method->name == 'setImageFormat')
@@ -82,9 +82,9 @@ class Image extends Variable implements VariableInterface
                     $image_path_info['extension'] = $image_format;
                     $thumb_image = $image_path_info['dirname'] . '/' . $image_path_info['filename'] . $thumb->postfix . '.' . $image_path_info['extension'];
                 }
-    
-                $imagick->writeImage($thumb_image);
             }
+            
+            $imagick->writeImage($thumb_image);
         }
     }
     
