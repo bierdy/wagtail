@@ -286,12 +286,26 @@ class Resource extends Wagtail
             $resource->template_class_method = $templates[$resource->template_id]->class_method;
     
             $template_variables = explode(',', $templates[$resource->template_id]->variables);
-            $resource->variables = [];
+            $resource->variables = (object) [];
             foreach($variable_values as &$variable_value)
                 if (isset($variable_value->resource_id) && $variable_value->resource_id === $resource->id && in_array($variable_value->variable_id, $template_variables))
                 {
-                    unset($variable_value->resource_id);
-                    $resource->variables[] = $variable_value;
+                    if (! property_exists($resource->variables, $variable_value->variable_name)) {
+                        $resource->variables->{$variable_value->variable_name} = (object) [
+                            'variable_id' => $variable_value->variable_id,
+                            'variable_options' => json_decode($variable_value->variable_options, true),
+                            'value' => $variable_value->value,
+                        ];
+                        continue;
+                    }
+    
+                    if (isset($resource->variables->{$variable_value->variable_name}->value))
+                    {
+                        $resource->variables->{$variable_value->variable_name}->values[] = $resource->variables->{$variable_value->variable_name}->value;
+                        unset($resource->variables->{$variable_value->variable_name}->value);
+                    }
+    
+                    $resource->variables->{$variable_value->variable_name}->values[] = $variable_value->value;
                 }
             
             if ($key === array_key_first($resources))
