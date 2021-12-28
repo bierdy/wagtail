@@ -53,7 +53,7 @@ class Wagtail extends BaseService
     
     public function getResource() : ? object
     {
-        return $this->resource;
+        return is_null($this->resource) ? null : clone $this->resource;
     }
     
     protected function setResource(object $resource = null)
