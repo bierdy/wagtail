@@ -73,6 +73,8 @@ class Resource extends Wagtail
                     FROM
                         {$resource_table} AS childs
                     WHERE
+                        childs.active = 1
+                    AND
                         childs.id = '{$id}'
                     UNION ALL
                     SELECT
@@ -84,6 +86,8 @@ class Resource extends Wagtail
                         {$resource_table} AS parents
                     ON
                         parents.id = childs.parent_id
+                    WHERE
+                        parents.active = 1
                 )
             SELECT
                 resources.*
@@ -207,6 +211,8 @@ class Resource extends Wagtail
                     FROM
                         {$resource_table} AS childs
                     WHERE
+                        childs.active = 1
+                    AND
                         childs.url = '{$last_uri_segment}'
                     UNION ALL
                     SELECT
@@ -219,6 +225,8 @@ class Resource extends Wagtail
                     ON
                         parents.id = childs.parent_id
                     WHERE
+                        parents.active = 1
+                    AND
                         parents.url = JSON_UNQUOTE(JSON_EXTRACT('{$uri_segments_reverse_json}', CONCAT('$[', level, ']')))
                 )
             SELECT
