@@ -10,6 +10,7 @@ class App
         'modal_confirm_link': '.modal-confirm-link',
         'ck_editor': '.ck-editor',
         'resources_tree': '.resources-tree',
+        'form_template_variables': '.form-template-variables',
     };
     
     config = {
@@ -108,6 +109,101 @@ class App
                     console.log(error);
                 });
         }
+    }
+    
+    formTemplateVariables()
+    {
+        let form_template_variables = document.querySelector(app.elements.form_template_variables);
+        
+        if (! form_template_variables)
+            return;
+        
+        form_template_variables.addEventListener('dragstart', (e) => {
+            if (! e.target)
+                return;
+        
+            e.target.classList.add('selected');
+        });
+    
+        form_template_variables.addEventListener('dragend', (e) => {
+            if (! e.target)
+                return;
+        
+            e.target.classList.remove('selected');
+            
+            form_template_variables.querySelectorAll('.card-placeholder, .card-body-placeholder').forEach((element) => {
+                element.classList.remove('is-insertable');
+            });
+        });
+    
+        form_template_variables.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        
+            let selected_item = form_template_variables.querySelector('.selected');
+            let selected_previous_placeholder = selected_item.previousElementSibling;
+            let selected_next_placeholder = selected_item.nextElementSibling;
+            let current_placeholder = e.target;
+            let is_movable = false;
+            
+            if (current_placeholder === selected_previous_placeholder || current_placeholder === selected_next_placeholder)
+                is_movable = false;
+            else if (selected_item.classList.contains('card'))
+                is_movable = current_placeholder.classList.contains('card-placeholder');
+            else if (selected_item.classList.contains('card-item'))
+                is_movable = current_placeholder.classList.contains('card-body-placeholder');
+        
+            if (! is_movable)
+                return;
+    
+            current_placeholder.classList.add('is-insertable');
+        });
+    
+        form_template_variables.addEventListener('dragleave', (e) => {
+            if (! e.target)
+                return;
+        
+            e.target.classList.remove('is-insertable');
+        });
+        
+        form_template_variables.addEventListener('drop', (e) => {
+            if (! e.target)
+                return;
+        
+            let selected_item = form_template_variables.querySelector('.selected');
+            let selected_previous_placeholder = selected_item.previousElementSibling;
+            let selected_next_placeholder = selected_item.nextElementSibling;
+            let current_placeholder = e.target;
+            let current_parent = current_placeholder.parentElement;
+            let is_droppable = current_placeholder.classList.contains('is-insertable');
+            
+            if (! is_droppable)
+                return;
+            
+            current_parent.insertBefore(selected_next_placeholder, current_placeholder.nextSibling);
+            current_parent.insertBefore(selected_item, current_placeholder.nextSibling);
+            
+            $(form_template_variables).find('.card.active-variables').each(function(index, card) {
+                $(card).children('.card-order').val(index);
+    
+                $(card).find('.card-item').each(function(index, card_item) {
+                    $(card_item).children('.card-item-checked').val(1);
+                    $(card_item).children('.card-item-order').val(index);
+                    $(card_item).children('.card-item-variable-group-id').val($(card).children('.card-id').val());
+                });
+            });
+    
+            $(form_template_variables).find('.card.hidden-variables .card-item').each(function(index, card_item) {
+                $(card_item).children('.card-item-checked').val(1);
+                $(card_item).children('.card-item-order').val('');
+                $(card_item).children('.card-item-variable-group-id').val('');
+            });
+    
+            $(form_template_variables).find('.card.available-variables .card-item').each(function(index, card_item) {
+                $(card_item).children('.card-item-checked').val('');
+                $(card_item).children('.card-item-order').val('');
+                $(card_item).children('.card-item-variable-group-id').val('');
+            });
+        });
     }
     
     resourcesTree()
@@ -439,5 +535,5 @@ class App
     }
 }
 
-let app = new App(['initConfig', 'nativeModalEvents', 'resourcesTree', 'ckEditor']);
+let app = new App(['initConfig', 'nativeModalEvents', 'resourcesTree', 'formTemplateVariables', 'ckEditor']);
 app.init();

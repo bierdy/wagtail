@@ -49,6 +49,9 @@ class BaseController extends Controller
     protected $languageModel = null;
     protected $variableModel = null;
     protected $variableValueModel = null;
+    protected $variableGroupModel = null;
+    protected $templateVariableGroupModel = null;
+    protected $variableGroupVariableModel = null;
     
     /**
      * Constructor.
@@ -72,6 +75,9 @@ class BaseController extends Controller
         $this->languageModel = model('Language');
         $this->variableModel = model('Variable');
         $this->variableValueModel = model('VariableValue');
+        $this->variableGroupModel = model('VariableGroup');
+        $this->templateVariableGroupModel = model('TemplateVariableGroup');
+        $this->variableGroupVariableModel = model('VariableGroupVariable');
         
         $app_config = [
             'baseURL' => $this->app_config->baseURL,

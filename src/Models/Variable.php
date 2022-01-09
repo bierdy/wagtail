@@ -46,7 +46,6 @@ class Variable extends Wagtail
             ->where('t.id', $template_id)
             ->join("{$templateVariableModel->table} AS tv", "tv.variable_id = {$variableModel->table}.id", 'left')
             ->join("{$templateModel->table} AS t", "t.id = tv.template_id", 'left')
-            ->orderBy('tv.order', 'ASC')
             ->findAll();
         
         $variable_values = $variableValueModel->where('resource_id', $resource_id)->orderBy('order', 'ASC')->findAll();

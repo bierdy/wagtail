@@ -56,5 +56,12 @@ $routes->group($wagtail_app_config->backRootPath, ['namespace' => 'Wagtail\Contr
         $routes->get('set-default/(:num)', 'Languages::setDefault/$1');
     });
     
+    $routes->group('variable-groups', function($routes)
+    {
+        $routes->match(['get', 'post'], 'add/(:num)', 'VariableGroups::add/$1');
+        $routes->match(['get', 'post'], 'edit/(:num)', 'VariableGroups::edit/$1');
+        $routes->get('delete/(:num)', 'VariableGroups::delete/$1');
+    });
+    
     $routes->get('get-assets', 'Assets::get');
 });

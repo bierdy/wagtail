@@ -33,11 +33,29 @@
             <?= form_input('template_title', $template->title, ['class' => 'form-control', 'id' => 'template_title', 'disabled' => 'disabled']); ?>
             <?= form_hidden('template_id', $template->id); ?>
         </div>
-        <?php foreach($variables as $variable) { ?>
-            <?php if (! empty($variable->template)) { ?>
-                <?= view($variable->template, ['post' => $post, 'variable' => $variable, 'resource' => $resource]); ?>
-            <?php } ?>
-        <?php } ?>
+        <?php if (! empty($template_variable_groups)) : ?>
+            <ul class="nav nav-tabs">
+                <?php foreach($template_variable_groups as $key => $template_variable_group) { ?>
+                    <li class="nav-item">
+                        <button class="nav-link<?= empty($key) ? ' active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#variable-group-id-<?= $template_variable_group->id; ?>" type="button"><?= $template_variable_group->title; ?></button>
+                    </li>
+                <?php } ?>
+            </ul>
+            <div class="tab-content">
+                <?php foreach($template_variable_groups as $key => $template_variable_group) { ?>
+                    <div class="tab-pane fade<?= empty($key) ? ' show active' : ''; ?>" id="variable-group-id-<?= $template_variable_group->id; ?>">
+                        <?php foreach($variable_group_variables as $variable_group_variable) { ?>
+                            <?php if ($variable_group_variable->variable_group_id !== $template_variable_group->id) continue; ?>
+                            <?php foreach($variables as $variable) { ?>
+                                <?php if ($variable->id === $variable_group_variable->variable_id && ! empty($variable->template)) { ?>
+                                    <?= view($variable->template, ['post' => $post, 'variable' => $variable, 'resource' => $resource]); ?>
+                                <?php } ?>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+            </div>
+        <?php endif; ?>
         <div class="mb-3 overflow-hidden">
             <?= form_submit('submit', 'Update', ['class' => 'btn btn-primary float-end']); ?>
         </div>

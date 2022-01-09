@@ -49,7 +49,21 @@ class Resources extends BaseController
         $post = $this->request->getPost();
         $resource = $this->resourceModel->find($id);
         $variables = $this->variableModel->getVariablesWithValues($resource->id, $resource->template_id);
+        
+        $template_variable_groups = $this->wagtailModel->db
+            ->table("{$this->variableGroupModel->table} AS vg")
+            ->select('vg.*, tvg.order AS order')
+            ->join("{$this->templateVariableGroupModel->table} AS tvg", 'vg.id = tvg.variable_group_id', 'inner')
+            ->where(['tvg.template_id' => $resource->template_id])
+            ->orderBy('order', 'ASC')
+            ->get()
+            ->getResult();
     
+        $variable_group_variables = ! empty($template_variable_groups) ? $this->variableGroupVariableModel
+            ->whereIn('variable_group_id', array_column($template_variable_groups, 'id'))
+            ->orderBy('order', 'ASC')
+            ->findAll() : [];
+        
         if (! empty($post))
         {
             if (! empty($variables))
@@ -87,6 +101,8 @@ class Resources extends BaseController
                 'parent' => $parent,
                 'template' => $template,
                 'variables' => $variables,
+                'template_variable_groups' => $template_variable_groups,
+                'variable_group_variables' => $variable_group_variables,
                 'message' => getWagtailCookie('message', true) ?? $message ?? '',
                 'errors' => $errors ?? [],
             ];

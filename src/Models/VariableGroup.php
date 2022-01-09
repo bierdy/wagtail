@@ -2,9 +2,9 @@
 
 namespace Wagtail\Models;
 
-class TemplateVariable extends Wagtail
+class VariableGroup extends Wagtail
 {
-    protected $table = 'template_variables';
+    protected $table = 'variable_groups';
     protected $primaryKey = 'id';
     
     protected $useAutoIncrement = true;
@@ -12,17 +12,16 @@ class TemplateVariable extends Wagtail
     protected $returnType = 'object';
     protected $useSoftDeletes = false;
     
-    protected $allowedFields = ['template_id', 'variable_id'];
+    protected $allowedFields = ['title'];
     
     protected $useTimestamps = true;
-    protected $createdField = null;
-    protected $updatedField = null;
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
     protected $deletedField = null;
     protected $dateFormat = 'datetime';
     
     protected $validationRules = [
-        'template_id' => 'required',
-        'variable_id' => 'required',
+        'title' => 'required',
     ];
     protected $validationMessages = [];
     protected $skipValidation = false;
