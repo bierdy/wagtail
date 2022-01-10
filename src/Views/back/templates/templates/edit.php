@@ -74,7 +74,8 @@
                                     <?php foreach($variable_group_variables as $variable_group_variable) : ?>
                                         <?php if ($variable_group_variable->variable_group_id !== $template_variable_group->id) continue; ?>
                                         <div class="card-item" draggable="true">
-                                            <?= $variables[$variable_group_variable->variable_id]->title; ?>
+                                            <div class="card-item-title"><?= $variables[$variable_group_variable->variable_id]->title; ?></div>
+                                            <div class="card-item-name"><?= $variables[$variable_group_variable->variable_id]->name; ?></div>
                                             <?= form_input(['type' => 'hidden', 'name' => "variables[{$variable_group_variable->variable_id}][template_variable_id]", 'value' => $template_variables[$variable_group_variable->variable_id]->id ?? 0, 'class' => 'card-item-id']); ?>
                                             <?= form_input(['type' => 'hidden', 'name' => "variables[{$variable_group_variable->variable_id}][checked]", 'value' => 1, 'class' => 'card-item-checked']); ?>
                                             <?= form_input(['type' => 'hidden', 'name' => "variables[{$variable_group_variable->variable_id}][order]", 'value' => $variable_group_variable->order, 'class' => 'card-item-order']); ?>
@@ -106,7 +107,8 @@
                             <?php foreach($template_variables as $template_variable) : ?>
                                 <?php if (in_array($template_variable->variable_id, array_column($variable_group_variables, 'variable_id'))) continue; ?>
                                 <div class="card-item" draggable="true">
-                                    <?= $variables[$template_variable->variable_id]->title; ?>
+                                    <div class="card-item-title"><?= $variables[$template_variable->variable_id]->title; ?></div>
+                                    <div class="card-item-name"><?= $variables[$template_variable->variable_id]->name; ?></div>
                                     <?= form_input(['type' => 'hidden', 'name' => "variables[{$template_variable->variable_id}][template_variable_id]", 'value' => $template_variables[$template_variable->variable_id]->id ?? 0, 'class' => 'card-item-id']); ?>
                                     <?= form_input(['type' => 'hidden', 'name' => "variables[{$template_variable->variable_id}][checked]", 'value' => 1, 'class' => 'card-item-checked']); ?>
                                     <?= form_input(['type' => 'hidden', 'name' => "variables[{$template_variable->variable_id}][order]", 'value' => '', 'class' => 'card-item-order']); ?>
@@ -132,7 +134,8 @@
                                 <?php foreach($variables as $variable_id => $variable) : ?>
                                     <?php if (isset($template_variables[$variable->id])) continue; ?>
                                     <div class="card-item" draggable="true">
-                                        <?= $variable->title; ?>
+                                        <div class="card-item-title"><?= $variable->title; ?></div>
+                                        <div class="card-item-name"><?= $variable->name; ?></div>
                                         <?= form_input(['type' => 'hidden', 'name' => "variables[{$variable->id}][template_variable_id]", 'value' => 0, 'class' => 'card-item-id']); ?>
                                         <?= form_input(['type' => 'hidden', 'name' => "variables[{$variable->id}][checked]", 'value' => '', 'class' => 'card-item-checked']); ?>
                                         <?= form_input(['type' => 'hidden', 'name' => "variables[{$variable->id}][order]", 'value' => '', 'class' => 'card-item-order']); ?>

@@ -162,6 +162,14 @@
     border-style: dashed;
     opacity: 0.4;
 }
+.form-template-variables .card .card-body .card-item .card-item-title {
+    display: inline-block;
+}
+.form-template-variables .card .card-body .card-item .card-item-name {
+    display: inline-block;
+    font-size: 0.72em;
+    opacity: 0.8;
+}
 .form-template-variables .card-placeholder,
 .form-template-variables .card-body-placeholder {
     height: 16px;
