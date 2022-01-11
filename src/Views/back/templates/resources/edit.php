@@ -34,7 +34,7 @@
             <?= form_hidden('template_id', $template->id); ?>
         </div>
         <?php if (! empty($template_variable_groups)) : ?>
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs mt-4 mb-3">
                 <?php foreach($template_variable_groups as $key => $template_variable_group) { ?>
                     <li class="nav-item">
                         <button class="nav-link<?= empty($key) ? ' active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#variable-group-id-<?= $template_variable_group->id; ?>" type="button"><?= $template_variable_group->title; ?></button>
