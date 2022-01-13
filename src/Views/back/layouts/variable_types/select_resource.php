@@ -8,8 +8,9 @@ $parent_id = (int) $parent_id;
 $template_ids = $options->template_ids ?? '';
 $template_ids = explode(',', $template_ids);
 $template_ids = array_diff($template_ids, ['']);
-$active = $options->only_active ?? false;
+$active = $options->active ?? false;
 $active = (bool) $active;
+$empty_option_title = $options->empty_option_title ?? 'Select resource';
 
 $resources = $resourceModel->getResourceTree($parent_id);
 $variable_resources = [];
@@ -34,7 +35,7 @@ $buildVariableResourcesArray = function(array $childs, int $tree_level = 0, arra
 };
 
 $variable_resources = $buildVariableResourcesArray($resources[0]->childs ?? [], 0);
-$variable_resources = ['' => 'Select resource'] + $variable_resources;
+$variable_resources = ['' => $empty_option_title] + $variable_resources;
 
 ?>
 
