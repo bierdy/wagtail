@@ -114,6 +114,25 @@ class Variables extends BaseController
         $this->templateVariableModel->where('variable_id', $id)->delete();
         $this->variableValueModel->where('variable_id', $id)->delete();
         
+        $variable_group_variables = $this->variableGroupVariableModel->where(['variable_id' => $id])->findAll();
+        
+        if (! empty($variable_group_variables))
+        {
+            foreach($variable_group_variables as $variable_group_variable)
+            {
+                $this->variableGroupVariableModel->delete($variable_group_variable->id);
+                
+                $variable_group_variables_ = $this->variableGroupVariableModel->where(['variable_group_id' => $variable_group_variable->variable_group_id])->orderBy('order', 'ASC')->findAll();
+                
+                foreach($variable_group_variables_ as $key_ => $variable_group_variable_)
+                {
+                    $variable_group_variable_->order = $key_;
+                    
+                    $this->variableGroupVariableModel->update($variable_group_variable_->id, $variable_group_variable_);
+                }
+            }
+        }
+        
         return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Variables::list')));
     }
     
