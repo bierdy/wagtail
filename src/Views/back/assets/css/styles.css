@@ -147,7 +147,7 @@
 .form-template-variables .card .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
 }
 .form-template-variables .card .card-body {
     padding-top: 0;
