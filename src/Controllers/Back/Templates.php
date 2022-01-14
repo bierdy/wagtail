@@ -183,6 +183,14 @@ class Templates extends BaseController
     {
         $this->templateModel->delete($id);
         $this->templateVariableModel->where('template_id', $id)->delete();
+    
+        $template_variable_groups = $this->templateVariableGroupModel->where(['template_id' => $id])->findAll();
+        foreach($template_variable_groups as $template_variable_group)
+        {
+            $this->templateVariableGroupModel->delete($template_variable_group->id);
+            $this->variableGroupModel->delete($template_variable_group->variable_group_id);
+            $this->variableGroupVariableModel->where('variable_group_id', $template_variable_group->variable_group_id)->delete();
+        }
         
         return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::list')));
     }
