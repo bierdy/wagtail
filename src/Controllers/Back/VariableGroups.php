@@ -78,7 +78,7 @@ class VariableGroups extends BaseController
         echo view('Wagtail\Views\back\templates\variable_groups\edit', $data);
     }
     
-    public function delete($id)
+    public function delete(int $id = 0)
     {
         $variable_group = $this->variableGroupModel->find($id);
         
@@ -92,7 +92,7 @@ class VariableGroups extends BaseController
         if (! is_null($template_variable_group))
         {
             $this->templateVariableGroupModel->delete($template_variable_group->id);
-    
+            
             $template_variable_groups_ = $this->templateVariableGroupModel->where(['template_id' => $template_variable_group->template_id])->orderBy('order', 'ASC')->findAll();
             
             foreach($template_variable_groups_ as $key_ => $template_variable_group_)
@@ -101,7 +101,7 @@ class VariableGroups extends BaseController
                 
                 $this->templateVariableGroupModel->update($template_variable_group_->id, $template_variable_group_);
             }
-    
+            
             setWagtailCookie('message', 'The variable group was successfully deleted.');
             return $this->response->redirect(base_url(route_to('Wagtail\Controllers\Back\Templates::edit', $template_variable_group->template_id)));
         }
