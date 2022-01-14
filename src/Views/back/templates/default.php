@@ -19,7 +19,7 @@
     <body>
         <?= view('Wagtail\Views\back\layouts\common\header'); ?>
         <main class="main mt-4">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-5 col-xl-4 col-xxl-4">
                         <?= view('Wagtail\Views\back\layouts\common\left_sidebar'); ?>

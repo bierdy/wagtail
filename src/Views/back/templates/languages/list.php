@@ -8,8 +8,8 @@
         <?php else : ?>
             <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Languages::deleteAll'), 'Delete all languages', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all languages?']); ?></p>
         <?php endif; ?>
-        <div class="table-responsive">
-            <table class="table link-secondary">
+        <div class="table-responsive mb-3">
+            <table class="table link-secondary m-0">
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
@@ -73,7 +73,7 @@
     <?php else : ?>
         <p>There are no languages.</p>
     <?php endif ?>
-    <div class="overflow-hidden">
+    <div class="mb-3 overflow-hidden">
         <?= anchor(route_to('Wagtail\Controllers\Back\Languages::add'), 'Add language', ['class' => 'btn btn-primary float-end']); ?>
     </div>
 <?= $this->endSection(); ?>

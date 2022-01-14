@@ -4,8 +4,8 @@
     <?php if (! empty($variables)) : ?>
         <p class="text-end">Variables count: <?= count($variables); ?></p>
         <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Variables::deleteAll'), 'Delete all variables', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all variables?' . PHP_EOL . 'All values also will be deleted.']); ?></p>
-        <div class="table-responsive">
-            <table class="table link-secondary">
+        <div class="table-responsive mb-3">
+            <table class="table link-secondary mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
@@ -50,7 +50,7 @@
     <?php else : ?>
         <p>There are no variables.</p>
     <?php endif ?>
-    <div class="overflow-hidden">
+    <div class="mb-3 overflow-hidden">
         <?= anchor(route_to('Wagtail\Controllers\Back\Variables::add'), 'Add variable', ['class' => 'btn btn-primary float-end']); ?>
     </div>
 <?= $this->endSection(); ?>

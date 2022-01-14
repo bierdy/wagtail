@@ -8,8 +8,8 @@
         <?php else : ?>
             <p class="text-end"><?= anchor(route_to('Wagtail\Controllers\Back\Templates::deleteAll'), 'Delete all templates', ['class' => 'btn btn-danger modal-confirm-link', 'data-confirm-link-text' => 'Are you sure you want to delete all templates?']); ?></p>
         <?php endif; ?>
-        <div class="table-responsive">
-            <table class="table link-secondary">
+        <div class="table-responsive mb-3">
+            <table class="table link-secondary mb-0">
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
@@ -66,7 +66,7 @@
     <?php else : ?>
         <p>There are no templates.</p>
     <?php endif ?>
-    <div class="overflow-hidden">
+    <div class="mb-3 overflow-hidden">
         <?= anchor(route_to('Wagtail\Controllers\Back\Templates::add'), 'Add template', ['class' => 'btn btn-primary float-end']); ?>
     </div>
 <?= $this->endSection(); ?>
