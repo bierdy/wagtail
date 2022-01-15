@@ -19,7 +19,7 @@ class Assets extends Controller
             return;
         
         $this->{$file_ext}();
-        $this->response->setBody(view($file_path . $file_name . '.' . $file_ext));
+        $this->response->setBody(view($file_path . $file_name . '.' . $file_ext, [], ['debug' => false]));
         $this->response->send();
     }
     
