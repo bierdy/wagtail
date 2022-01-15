@@ -164,3 +164,23 @@ if (! function_exists('deleteWagtailCookie'))
         $response->deleteCookie($name, $wagtail_cookie_config->domain, $wagtail_cookie_config->path, $wagtail_cookie_config->prefix);
     }
 }
+
+if (! function_exists('getFrontRootUrl'))
+{
+    function getFrontRootUrl() : string
+    {
+        $wagtail_app_config = config('WagtailApp');
+        
+        $https = ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off';
+        $server_port = ! empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : null;
+    
+        $scheme = $https || ($server_port == 443) ? 'https' : 'http';
+        
+        if (! empty($wagtail_app_config->frontDomain))
+            $front_root_url = $scheme . '://' . $wagtail_app_config->frontDomain . '/';
+        else
+            $front_root_url = site_url();
+        
+        return $front_root_url;
+    }
+}
