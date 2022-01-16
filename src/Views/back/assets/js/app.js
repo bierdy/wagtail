@@ -319,9 +319,12 @@ class App
         resources_tree_.addEventListener('dragstart', (e) => {
             if (! e.target)
                 return;
+    
+            if (e.target.getAttribute('draggable') !== 'true')
+                e.preventDefault();
             
             e.target.classList.add('selected');
-        })
+        });
         
         resources_tree_.addEventListener('dragend', (e) => {
             if (! e.target)
@@ -339,6 +342,10 @@ class App
             e.preventDefault();
             
             let selected_element = resources_tree_.querySelector('.selected');
+            
+            if (! selected_element)
+                return;
+            
             let selected_branch = selected_element.closest('.branch');
             let current_element = e.target;
             let current_branch = current_element.closest('.branch');
@@ -386,6 +393,10 @@ class App
                 return;
             
             let selected_element = resources_tree_.querySelector('.selected');
+    
+            if (! selected_element)
+                return;
+            
             let selected_branch = selected_element.closest('.branch');
             let selected_branch_tree = selected_branch.closest('.tree');
             let current_element = e.target;
