@@ -6,6 +6,8 @@ class App
         'body': '#body',
         'header': '.header',
         'footer': '.footer',
+        'left_sidebar': '.left-sidebar',
+        'resizer': '.resizer',
         'modal_alert_link': '.modal-alert-link',
         'modal_confirm_link': '.modal-confirm-link',
         'ck_editor': '.ck-editor',
@@ -317,11 +319,11 @@ class App
         let resources_tree_ = document.querySelector(app.elements.resources_tree);
         
         resources_tree_.addEventListener('dragstart', (e) => {
-            if (! e.target)
-                return;
-    
-            if (e.target.getAttribute('draggable') !== 'true')
+            if (! e.target || e.target.getAttribute('draggable') !== 'true')
+            {
                 e.preventDefault();
+                return;
+            }
             
             e.target.classList.add('selected');
         });
@@ -528,6 +530,47 @@ class App
         }
     }
     
+    leftSidebar()
+    {
+        let left_sidebar = document.querySelector(app.elements.left_sidebar);
+        let resizer = document.querySelector(app.elements.resizer);
+        let x = 0;
+        let w = 0;
+        
+        if (! left_sidebar || ! resizer)
+            return;
+    
+        const mouseDownHandler = function(e)
+        {
+            x = e.clientX;
+        
+            const styles = window.getComputedStyle(left_sidebar);
+            w = parseInt(styles.width, 10);
+        
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', mouseUpHandler);
+    
+            resizer.classList.add('resizing');
+        };
+    
+        const mouseMoveHandler = function(e)
+        {
+            const dx = w + e.clientX - x;
+            
+            left_sidebar.style.width = dx + 'px';
+            Cookies.set(app.config.wagtail.cookie.prefix + 'left_sidebar_width', dx);
+        };
+    
+        const mouseUpHandler = function()
+        {
+            resizer.classList.remove('resizing');
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+        };
+    
+        resizer.addEventListener('mousedown', mouseDownHandler);
+    }
+    
     initConfig()
     {
         if (window.app_config)
@@ -546,5 +589,5 @@ class App
     }
 }
 
-let app = new App(['initConfig', 'nativeModalEvents', 'resourcesTree', 'formTemplateVariables', 'ckEditor']);
+let app = new App(['initConfig', 'nativeModalEvents', 'resourcesTree', 'formTemplateVariables', 'ckEditor', 'leftSidebar']);
 app.init();

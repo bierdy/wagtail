@@ -21,10 +21,15 @@
         <main class="main mt-4">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-5 col-xl-4 col-xxl-4">
-                        <?= view('Wagtail\Views\back\layouts\common\left_sidebar'); ?>
+                    <div class="col-12 col-md-auto">
+                        <div class="left-sidebar" style="<?= ! is_null(getWagtailCookie('left_sidebar_width')) ? 'width: ' . getWagtailCookie('left_sidebar_width') . 'px' : ''; ?>">
+                            <?= view('Wagtail\Views\back\layouts\common\left_sidebar'); ?>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-7 col-xl-8 col-xxl-8">
+                    <div class="col-auto d-none d-md-block px-1">
+                        <div class="resizer px-1"></div>
+                    </div>
+                    <div class="col-12 col-md">
                         <h1><?= $title; ?></h1>
                         <?= $this->renderSection('template'); ?>
                     </div>

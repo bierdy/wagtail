@@ -1,3 +1,27 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+}
+.header {
+
+}
+.main {
+    flex-grow: 1;
+}
+.left-sidebar {
+    overflow-x: hidden;
+}
+.resizer {
+    width: 1px;
+    height: 100%;
+    background-color: #dee2e6;
+    box-sizing: content-box;
+    background-clip: content-box;
+    cursor: col-resize;
+}
+
 .resources-tree {
 
 }
@@ -91,6 +115,7 @@
 .resources-tree .tree .branch .content .menu .button {
     padding: 0 4px 0 4px;
     cursor: pointer;
+    background-color: #fff;
 }
 .resources-tree .tree .branch .content .menu .dropdown-menu {
 
