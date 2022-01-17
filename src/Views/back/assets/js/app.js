@@ -121,8 +121,11 @@ class App
             return;
         
         form_template_variables.addEventListener('dragstart', (e) => {
-            if (! e.target)
+            if (! e.target || e.target.getAttribute('draggable') !== 'true')
+            {
+                e.preventDefault();
                 return;
+            }
         
             e.target.classList.add('selected');
         });
@@ -142,6 +145,10 @@ class App
             e.preventDefault();
         
             let selected_item = form_template_variables.querySelector('.selected');
+    
+            if (! selected_item)
+                return;
+            
             let selected_previous_placeholder = selected_item.previousElementSibling;
             let selected_next_placeholder = selected_item.nextElementSibling;
             let current_placeholder = e.target;
@@ -172,6 +179,10 @@ class App
                 return;
         
             let selected_item = form_template_variables.querySelector('.selected');
+    
+            if (! selected_item)
+                return;
+            
             let selected_previous_placeholder = selected_item.previousElementSibling;
             let selected_next_placeholder = selected_item.nextElementSibling;
             let current_placeholder = e.target;
