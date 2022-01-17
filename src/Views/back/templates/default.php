@@ -18,18 +18,18 @@
     </head>
     <body>
         <?= view('Wagtail\Views\back\layouts\common\header'); ?>
-        <main class="main mt-4">
+        <main class="main">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-md-auto">
+                <div class="row h-100">
+                    <div class="col-12 col-md-auto pt-4 pb-4">
                         <div class="left-sidebar" style="<?= ! is_null(getWagtailCookie('left_sidebar_width')) ? 'width: ' . getWagtailCookie('left_sidebar_width') . 'px' : ''; ?>">
                             <?= view('Wagtail\Views\back\layouts\common\left_sidebar'); ?>
                         </div>
                     </div>
-                    <div class="col-auto d-none d-md-block px-1">
+                    <div class="col-auto d-none d-md-block">
                         <div class="resizer px-1"></div>
                     </div>
-                    <div class="col-12 col-md">
+                    <div class="col-12 col-md pt-4">
                         <h1><?= $title; ?></h1>
                         <?= $this->renderSection('template'); ?>
                     </div>

@@ -8,6 +8,7 @@ body {
 
 }
 .main {
+    display: flex;
     flex-grow: 1;
 }
 .left-sidebar {
@@ -20,6 +21,9 @@ body {
     box-sizing: content-box;
     background-clip: content-box;
     cursor: col-resize;
+}
+.footer {
+
 }
 
 .resources-tree {
@@ -36,6 +40,7 @@ body {
     display: block;
 }
 .resources-tree > .tree {
+    margin: 0 0 0 0;
     padding: 0 0 0 0 !important;
 }
 .resources-tree .tree .branch {
