@@ -225,3 +225,9 @@ body {
 .form-template-variables .card-body-placeholder.is-insertable i {
     display: block;
 }
+
+@media all and (max-width: 991px) {
+    .left-sidebar {
+        width: 100% !important;
+    }
+}

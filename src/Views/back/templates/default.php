@@ -21,15 +21,15 @@
         <main class="main">
             <div class="container-fluid">
                 <div class="row h-100">
-                    <div class="col-12 col-md-auto pt-4 pb-4">
+                    <div class="col-12 col-lg-auto pt-4 pb-4">
                         <div class="left-sidebar" style="<?= ! is_null(getWagtailCookie('left_sidebar_width')) ? 'width: ' . getWagtailCookie('left_sidebar_width') . 'px' : ''; ?>">
                             <?= view('Wagtail\Views\back\layouts\common\left_sidebar'); ?>
                         </div>
                     </div>
-                    <div class="col-auto d-none d-md-block">
+                    <div class="col-auto d-none d-lg-block">
                         <div class="resizer px-1"></div>
                     </div>
-                    <div class="col-12 col-md pt-4">
+                    <div class="col-12 col-lg pt-lg-4">
                         <h1><?= $title; ?></h1>
                         <?= $this->renderSection('template'); ?>
                     </div>
