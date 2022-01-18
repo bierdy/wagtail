@@ -6,7 +6,8 @@ use CodeIgniter\Config\BaseService;
 
 class Wagtail extends BaseService
 {
-    protected $resource = null;
+    protected ? object $resource = null;
+    protected bool $inAdminPanel = false;
     
     public function setResourceRoute()
     {
@@ -69,5 +70,21 @@ class Wagtail extends BaseService
     
         if (! in_array($validation_class_rules_class, $config_validation_rule_sets))
             config('Validation')->ruleSets[] = $validation_class_rules_class;
+    }
+    
+    /**
+     * @return bool
+     */
+    public function isInAdminPanel(): bool
+    {
+        return $this->inAdminPanel;
+    }
+    
+    /**
+     * @param bool $inAdminPanel
+     */
+    public function setInAdminPanel(bool $inAdminPanel): void
+    {
+        $this->inAdminPanel = $inAdminPanel;
     }
 }
