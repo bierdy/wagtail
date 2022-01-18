@@ -42,6 +42,7 @@ class BaseController extends Controller
     protected $app_config = null;
     protected $wagtail_app_config = null;
     protected $wagtail_cookie_config = null;
+    protected $wagtail_admin_config = null;
     protected $wagtailModel = null;
     protected $resourceModel = null;
     protected $templateModel = null;
@@ -68,6 +69,7 @@ class BaseController extends Controller
         $this->app_config = config('App');
         $this->wagtail_app_config = config('WagtailApp');
         $this->wagtail_cookie_config = config('WagtailCookie');
+        $this->wagtail_admin_config = config('WagtailAdmin');
         $this->wagtailModel = model('Wagtail');
         $this->resourceModel = model('Resource');
         $this->templateModel = model('Template');
