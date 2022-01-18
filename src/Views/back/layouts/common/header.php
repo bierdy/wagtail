@@ -9,15 +9,13 @@
             </button>
             <div class="collapse navbar-collapse order-4 order-lg-3" id="header-menu">
                 <ul class="navbar-nav me-auto mb-0 pt-3 pb-2 py-lg-0 text-center">
-                    <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Templates::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= base_url(route_to('Wagtail\Controllers\Back\Templates::list')); ?>">Templates</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Variables::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= base_url(route_to('Wagtail\Controllers\Back\Variables::list')); ?>">Variables</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link<?= url_is(route_to('Wagtail\Controllers\Back\Languages::list') . '*') ? ' active text-decoration-underline' : ''; ?>" href="<?= base_url(route_to('Wagtail\Controllers\Back\Languages::list')); ?>">Languages</a>
-                    </li>
+                    <?php if (! empty($back_header_menu)) : ?>
+                        <?php foreach($back_header_menu as $back_header_menu_item) : ?>
+                            <li class="nav-item">
+                                <a class="nav-link<?= $back_header_menu_item['active'] ? ' active text-decoration-underline' : ''; ?>" href="<?= $back_header_menu_item['link']; ?>"><?= $back_header_menu_item['title']; ?></a>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
             </div>
             <a class="navbar-brand order-3 order-lg-4 m-0" href="<?= $front_root_url; ?>" target="_blank">Front</a>

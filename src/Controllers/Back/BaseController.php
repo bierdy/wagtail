@@ -104,6 +104,7 @@ class BaseController extends Controller
                 'wagtail_app_config' => json_encode($wagtail_app_config),
                 'wagtail_cookie_config' => json_encode($wagtail_cookie_config),
                 'front_root_url' => getFrontRootUrl(),
+                'back_header_menu' => $this->wagtail_admin_config->headerMenu,
             ];
     }
 }
