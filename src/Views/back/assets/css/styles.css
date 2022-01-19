@@ -12,6 +12,7 @@ body {
     flex-grow: 1;
 }
 .left-sidebar {
+    width: 300px;
     overflow-x: hidden;
 }
 .resizer {

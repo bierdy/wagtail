@@ -249,7 +249,8 @@ class App
                     path: app.config.wagtail.cookie.path,
                     secure: app.config.wagtail.cookie.secure,
                     sameSite: app.config.wagtail.cookie.samesite,
-                });
+                }
+            );
         }
         
         let removeBranchIdFromCookie = function(branch_id)
@@ -269,7 +270,8 @@ class App
                     path: app.config.wagtail.cookie.path,
                     secure: app.config.wagtail.cookie.secure,
                     sameSite: app.config.wagtail.cookie.samesite,
-                });
+                }
+            );
         }
     
         branches.each(function(index, value) {
@@ -569,7 +571,17 @@ class App
             const dx = w + e.clientX - x;
             
             left_sidebar.style.width = dx + 'px';
-            Cookies.set(app.config.wagtail.cookie.prefix + 'left_sidebar_width', dx);
+            Cookies.set(
+                app.config.wagtail.cookie.prefix + 'left_sidebar_width',
+                dx,
+                {
+                    domain: app.config.wagtail.cookie.domain,
+                    expires: 365,
+                    path: app.config.wagtail.cookie.path,
+                    secure: app.config.wagtail.cookie.secure,
+                    sameSite: app.config.wagtail.cookie.samesite,
+                }
+            );
         };
     
         const mouseUpHandler = function()
