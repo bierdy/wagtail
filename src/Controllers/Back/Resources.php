@@ -64,6 +64,12 @@ class Resources extends BaseController
             ->orderBy('order', 'ASC')
             ->findAll() : [];
         
+        $variable_group_variables_ids = array_column($variable_group_variables, 'variable_id');
+        
+        $variables = array_filter($variables, function($variable) use ($variable_group_variables_ids) {
+            return in_array($variable->id, $variable_group_variables_ids);
+        });
+        
         if (! empty($post))
         {
             if (! empty($variables))
