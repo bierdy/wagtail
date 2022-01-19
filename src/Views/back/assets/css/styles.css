@@ -13,7 +13,6 @@ body {
 }
 .left-sidebar {
     width: 300px;
-    overflow-x: hidden;
 }
 .resizer {
     width: 1px;
@@ -53,6 +52,7 @@ body {
 .resources-tree .tree .branch .content .main {
     position: relative;
     padding: 0 20px 0 20px;
+    overflow: hidden;
 }
 .resources-tree .tree .branch .content .main .arrow {
     position: absolute;
