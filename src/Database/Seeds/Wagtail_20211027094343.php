@@ -131,7 +131,7 @@ class Wagtail_20211027094343 extends WagtailSeeder
                   "rules":
                   {
                     "multiple_image": "max_size[multiple_image,4096]",
-                    "multiple_image_orders": "integer"
+                    "multiple_image_orders.*": "integer"
                   }
                 }
                 EOT,
