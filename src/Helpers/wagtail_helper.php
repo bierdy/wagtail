@@ -204,3 +204,33 @@ if (! function_exists('getWagtailComposerPackage'))
         return $composer_lock_packages['bierdy/wagtail'] ?? [];
     }
 }
+
+if (! function_exists('setWagtailAdminConfigHeaderMenu'))
+{
+    function setWagtailAdminConfigHeaderMenu() : void
+    {
+        $wagtail_admin_config = config('WagtailAdmin');
+    
+        $wagtail_admin_config->headerMenu =
+            [
+                'templates' =>
+                    [
+                        'title' => 'Templates',
+                        'link' => base_url(route_to('Wagtail\Controllers\Back\Templates::list')),
+                        'active' => url_is(route_to('Wagtail\Controllers\Back\Templates::list') . '*'),
+                    ],
+                'variables' =>
+                    [
+                        'title' => 'Variables',
+                        'link' => base_url(route_to('Wagtail\Controllers\Back\Variables::list')),
+                        'active' => url_is(route_to('Wagtail\Controllers\Back\Variables::list') . '*'),
+                    ],
+                'languages' =>
+                    [
+                        'title' => 'Languages',
+                        'link' => base_url(route_to('Wagtail\Controllers\Back\Languages::list')),
+                        'active' => url_is(route_to('Wagtail\Controllers\Back\Languages::list') . '*'),
+                    ],
+            ];
+    }
+}
