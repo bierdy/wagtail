@@ -1,6 +1,14 @@
 <?= $this->extend('Wagtail\Views\back\templates\default'); ?>
 
 <?= $this->section('template'); ?>
+    <div class="row justify-content-between mt-0 mb-4">
+        <div class="col-auto">
+            <div>Parent: <?= $parent->title ?? 'Root'; ?></div>
+        </div>
+        <div class="col-auto">
+            <div>Template: <?= $template->title; ?></div>
+        </div>
+    </div>
     <?php if (! empty($errors)) : ?>
         <div class="alert alert-danger">
             <?= $message; ?>
@@ -15,23 +23,21 @@
     <?php endif ?>
     <?= form_open_multipart(); ?>
         <?= form_hidden('id', $resource->id ?? 0); ?>
-        <div class="mb-3">
-            <?= form_label('Title', 'title', ['class' => 'form-label']); ?>
-            <?= form_input('title', $post['title'] ?? $resource->title ?? '', ['class' => 'form-control', 'id' => 'title']); ?>
-        </div>
-        <div class="mb-3">
-            <?= form_label('Url', 'url', ['class' => 'form-label']); ?>
-            <?= form_input('url', $post['url'] ?? $resource->url ?? '', ['class' => 'form-control', 'id' => 'url']); ?>
-        </div>
-        <div class="mb-3">
-            <?= form_label('Parent', 'parent_title', ['class' => 'form-label']); ?>
-            <?= form_input('parent_title', $parent->title ?? 'Root', ['class' => 'form-control', 'id' => 'parent_title', 'disabled' => 'disabled']); ?>
-            <?= form_hidden('parent_id', $parent->id ?? 0); ?>
-        </div>
-        <div class="mb-3">
-            <?= form_label('Template', 'template_title', ['class' => 'form-label']); ?>
-            <?= form_input('template_title', $template->title, ['class' => 'form-control', 'id' => 'template_title', 'disabled' => 'disabled']); ?>
-            <?= form_hidden('template_id', $template->id); ?>
+        <?= form_hidden('parent_id', $parent->id ?? 0); ?>
+        <?= form_hidden('template_id', $template->id); ?>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="mb-3">
+                    <?= form_label('Title', 'title', ['class' => 'form-label']); ?>
+                    <?= form_input('title', $post['title'] ?? $resource->title ?? '', ['class' => 'form-control', 'id' => 'title']); ?>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="mb-3">
+                    <?= form_label('Url', 'url', ['class' => 'form-label']); ?>
+                    <?= form_input('url', $post['url'] ?? $resource->url ?? '', ['class' => 'form-control', 'id' => 'url']); ?>
+                </div>
+            </div>
         </div>
         <?php if (! empty($template_variable_groups)) : ?>
             <ul class="nav nav-tabs mt-4 mb-3">
