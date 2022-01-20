@@ -184,3 +184,23 @@ if (! function_exists('getFrontRootUrl'))
         return $front_root_url;
     }
 }
+
+if (! function_exists('getWagtailComposerPackage'))
+{
+    function getWagtailComposerPackage() : array
+    {
+        $composer_lock_file = file_get_contents(ROOTPATH . 'composer.lock');
+        
+        if ($composer_lock_file === false)
+            return [];
+        
+        $composer_lock_array = json_decode($composer_lock_file, true);
+    
+        if (is_null($composer_lock_array))
+            return [];
+    
+        $composer_lock_packages = array_combine(array_column($composer_lock_array['packages'], 'name'), $composer_lock_array['packages']);
+        
+        return $composer_lock_packages['bierdy/wagtail'] ?? [];
+    }
+}
