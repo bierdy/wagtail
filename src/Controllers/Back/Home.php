@@ -7,7 +7,7 @@ class Home extends BaseController
     public function index() : string
     {
         $custom_data = [
-            'title' => 'Wagtail',
+            'title' => 'Home',
         ];
         
         $data = array_merge($this->default_data, $custom_data);
