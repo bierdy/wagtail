@@ -141,7 +141,7 @@ body {
     display: inline-block;
     margin: 0 0.5rem 0.5rem 0;
     position: relative;
-    text-align: right;
+    text-align: center;
 }
 .input-images .input-image .image {
     display: block;
@@ -161,7 +161,8 @@ body {
 }
 .input-images .input-image .order {
     display: inline-block;
-    width: 3.2rem;
+    width: 4.2rem;
+    text-align: center;
 }
 
 .form-template-variables {
